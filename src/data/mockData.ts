@@ -2,75 +2,7 @@ import { Client, Exercise, WorkoutPlan, ChatMessage } from '@/types';
 
 export const INITIAL_EXERCISES: Exercise[] = [
   {
-    id: 'ex-1',
-    name: 'Press de Banca Plano con Barra',
-    muscleGroup: 'Pecho',
-    secondaryMuscles: ['Tríceps', 'Deltoides Anterior'],
-    equipment: 'Barra',
-    difficulty: 'Intermedio',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&auto=format&fit=crop&q=80',
-    videoUrl: 'https://www.youtube.com/watch?v=rT7DgCr-3pg',
-    instructions: [
-      'Túmbate en el banco con los ojos alineados debajo de la barra.',
-      'Junta y deprime las escápulas (retracción escapular firme).',
-      'Desciende la barra de forma controlada hacia la parte media del esternón (2-3 segundos de bajada).',
-      'Empuja con fuerza explosiva sin despegar los glúteos ni perder la tensión en la espalda.'
-    ],
-    coachNotes: 'Evita abrir los codos a 90 grados; mantenlos a unos 60-70 grados respecto al torso para proteger tus manguitos rotadores.'
-  },
-  {
-    id: 'ex-2',
-    name: 'Sentadilla Trasera con Barra Alta',
-    muscleGroup: 'Cuádriceps',
-    secondaryMuscles: ['Glúteos', 'Core', 'Erectores Espinales'],
-    equipment: 'Barra',
-    difficulty: 'Avanzado',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&auto=format&fit=crop&q=80',
-    videoUrl: 'https://www.youtube.com/watch?v=bEv6CCg2BC8',
-    instructions: [
-      'Apoya la barra sobre los trapecios superiores con las manos cerradas.',
-      'Inhala diafragmáticamente y crea presión intraabdominal (Valsalva).',
-      'Rompe caderas y rodillas simultáneamente manteniendo el pecho erguido.',
-      'Baja hasta que el pliegue de la cadera supere la rodilla (paralela o profunda).'
-    ],
-    coachNotes: 'Empuja el suelo como si quisieras separarlo con los pies. Mantén las rodillas alineadas con la punta de tus pies.'
-  },
-  {
-    id: 'ex-3',
-    name: 'Jalón al Pecho Agarre Neutro',
-    muscleGroup: 'Espalda',
-    secondaryMuscles: ['Bíceps', 'Braquiorradial', 'Deltoides Posterior'],
-    equipment: 'Poleas / Cables',
-    difficulty: 'Principiante',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&auto=format&fit=crop&q=80',
-    videoUrl: 'https://www.youtube.com/watch?v=CAwf7n6Luuc',
-    instructions: [
-      'Ajusta las almohadillas para que fijen tus muslos firmemente.',
-      'Agarre neutro con los brazos extendidos y el pecho elevado.',
-      'Inicia la tracción tirando desde los codos hacia abajo y atrás.',
-      'Toca suavemente la parte superior del pectoral y aguanta 1 segundo la contracción.'
-    ],
-    coachNotes: 'No te inclines en exceso hacia atrás; mantén un ángulo constante de unos 15 grados.'
-  },
-  {
-    id: 'ex-4',
-    name: 'Elevaciones Laterales con Mancuerna',
-    muscleGroup: 'Hombros',
-    secondaryMuscles: ['Trapecio Superior'],
-    equipment: 'Mancuernas',
-    difficulty: 'Principiante',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&auto=format&fit=crop&q=80',
-    videoUrl: 'https://www.youtube.com/watch?v=3VcKaXpzqRo',
-    instructions: [
-      'De pie o sentado, torso ligeramente inclinado hacia adelante 10 grados.',
-      'Sube los brazos por el plano escapular (ligeramente por delante del torso).',
-      'Eleva hasta la altura de los hombros guiando con los codos.',
-      'Baja controlando en 2 segundos completos.'
-    ],
-    coachNotes: 'No uses inercia del torso. Si te balanceas, baja el peso. Queremos aislamiento puro del deltoides lateral.'
-  },
-  {
-    id: 'ex-5',
+    id: 'ex-peso-muerto-rumano',
     name: 'Peso Muerto Rumano con Mancuernas',
     muscleGroup: 'Isquios',
     secondaryMuscles: ['Glúteos', 'Erectores Espinales', 'Antebrazos'],
@@ -87,55 +19,361 @@ export const INITIAL_EXERCISES: Exercise[] = [
     coachNotes: 'Imagina que empujas una puerta con el trasero. No dobles las rodillas más de la cuenta ni arquees la espalda baja.'
   },
   {
-    id: 'ex-6',
-    name: 'Curl de Bíceps en Banco Inclinado',
-    muscleGroup: 'Bíceps',
-    secondaryMuscles: ['Braquial Anterior'],
-    equipment: 'Mancuernas',
-    difficulty: 'Principiante',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop&q=80',
-    videoUrl: 'https://www.youtube.com/watch?v=soxrZlIl35U',
+    id: 'ex-prensa-inclinada',
+    name: 'Prensa Inclinada',
+    muscleGroup: 'Cuádriceps',
+    secondaryMuscles: ['Glúteos', 'Isquios'],
+    equipment: 'Máquina',
+    difficulty: 'Intermedio',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=S09u07tUKkw',
     instructions: [
-      'Ajusta el banco a unos 60-70 grados y apoya la espalda completamente.',
-      'Deja caer los brazos estirados en posición de máximo alargamiento de la cabeza larga.',
-      'Flexiona los codos manteniendo la posición de los hombros hacia atrás.',
-      'Aprieta en la cima 1 segundo y desciende en 3 segundos lentos.'
+      'Ajusta el respaldo a una inclinación cómoda.',
+      'Coloca los pies a la anchura de los hombros en el centro de la plataforma.',
+      'Desbloquea los seguros y desciende controlando el peso hasta formar unos 90 grados en las rodillas.',
+      'Empuja con toda la planta del pie sin bloquear las rodillas arriba.'
     ],
-    coachNotes: 'Máximo estiramiento abajo sin soltar la tensión activa en el tendón.'
+    coachNotes: 'Controla la bajada y nunca despegues la zona lumbar ni los glúteos del asiento.'
   },
   {
-    id: 'ex-7',
-    name: 'Extensiones de Tríceps en Polea Alta',
+    id: 'ex-press-pecho-convergente',
+    name: 'Press Pecho Convergente',
+    muscleGroup: 'Pecho',
+    secondaryMuscles: ['Deltoides Anterior', 'Tríceps'],
+    equipment: 'Máquina',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=JDnKz8G6GQo',
+    instructions: [
+      'Regula la altura del asiento para que los agarres queden a la altura media del pecho.',
+      'Junta las escápulas y apóyalas firmemente en el respaldo.',
+      'Empuja las palancas hacia adelante acompañando la trayectoria convergente.',
+      'Regresa de forma lenta sintiendo el estiramiento en el pectoral.'
+    ],
+    coachNotes: 'Aprieta el pecho 1 segundo en la máxima contracción.'
+  },
+  {
+    id: 'ex-jalon-pecho-agarre-abierto',
+    name: 'Jalón al Pecho Agarre Abierto',
+    muscleGroup: 'Espalda',
+    secondaryMuscles: ['Bíceps', 'Braquial Anterior'],
+    equipment: 'Poleas / Cables',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=55X8yLezpwc',
+    instructions: [
+      'Toma la barra ancha con agarre prono algo más ancho que los hombros.',
+      'Ajusta las almohadillas para fijar los muslos sin que se levanten.',
+      'Inicia la tracción bajando los hombros y llevando los codos hacia abajo y atrás.',
+      'Lleva la barra a la parte superior del pecho y regresa controlando.'
+    ],
+    coachNotes: 'No te balances hacia atrás; mantén el torso estable con el pecho inflado.'
+  },
+  {
+    id: 'ex-curl-femoral-sentado',
+    name: 'Curl Femoral Sentado',
+    muscleGroup: 'Isquios',
+    secondaryMuscles: ['Gemelos'],
+    equipment: 'Máquina',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=VtY0Xux8mjQ',
+    instructions: [
+      'Ajusta el respaldo para que la articulación de la rodilla coincida con el eje de la máquina.',
+      'Fija la almohadilla superior bien apretada sobre los muslos.',
+      'Coloca el rodillo inferior justo detrás de los tobillos.',
+      'Flexiona las rodillas tirando con fuerza hacia abajo y regresa lento en 2-3 segundos.'
+    ],
+    coachNotes: 'Pausa de 1 segundo en máxima flexión para maximizar el reclutamiento de los isquiotibiales.'
+  },
+  {
+    id: 'ex-remo-gironda-agarre-medio',
+    name: 'Remo Gironda Agarre Medio',
+    muscleGroup: 'Espalda',
+    secondaryMuscles: ['Bíceps', 'Deltoides Posterior'],
+    equipment: 'Poleas / Cables',
+    difficulty: 'Intermedio',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=-2QGI_0X-kc',
+    instructions: [
+      'Siéntate con las rodillas ligeramente flexionadas y los pies firmes en los apoyos.',
+      'Mantén el pecho erguido y los hombros deprimidos.',
+      'Tira del agarre medio hacia la parte baja del abdomen apretando las escápulas.',
+      'Extiende los brazos permitiendo que las escápulas se abran sin perder la postura lumbar.'
+    ],
+    coachNotes: 'Evita redondear la espalda baja en la fase excéntrica.'
+  },
+  {
+    id: 'ex-elevaciones-laterales',
+    name: 'Elevaciones Laterales',
+    muscleGroup: 'Hombros',
+    secondaryMuscles: ['Trapecios'],
+    equipment: 'Mancuernas',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=6vimL2xxTZQ',
+    instructions: [
+      'De pie con una ligera inclinación del torso hacia adelante.',
+      'Sostén las mancuernas a los lados con los codos con una microflexión fija.',
+      'Eleva los brazos en el plano escapular (30 grados hacia adelante) hasta la altura de los hombros.',
+      'Desciende de manera suave resistiendo la gravedad.'
+    ],
+    coachNotes: 'Imagina que lanzas las mancuernas hacia las paredes laterales, no hacia el techo.'
+  },
+  {
+    id: 'ex-pallof-press',
+    name: 'Pallof Press',
+    muscleGroup: 'Core / Abdomen',
+    secondaryMuscles: ['Oblicuos', 'Glúteos'],
+    equipment: 'Poleas / Cables',
+    difficulty: 'Intermedio',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/shorts/CpEltc6kgnM',
+    instructions: [
+      'Colócate de lado a la polea regulada a la altura del pecho.',
+      'Sostén el maneral con ambas manos pegado al centro del pecho.',
+      'Separa los pies a la anchura de los hombros con el abdomen firme.',
+      'Extiende los brazos hacia adelante en línea recta resistiendo el giro del torso.',
+      'Mantén 2 segundos extendido y regresa al pecho.'
+    ],
+    coachNotes: 'Ejercicio anti-rotación: el cuerpo no debe rotar absolutamente nada.'
+  },
+  {
+    id: 'ex-prensa-horizontal',
+    name: 'Prensa Horizontal',
+    muscleGroup: 'Cuádriceps',
+    secondaryMuscles: ['Glúteos', 'Aductores'],
+    equipment: 'Máquina',
+    difficulty: 'Intermedio',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=ErhjrY0POP8',
+    instructions: [
+      'Siéntate con la espalda y cadera bien apoyadas en el respaldo.',
+      'Coloca los pies en la plataforma según la colocación indicada por el entrenador.',
+      'Empuja la plataforma de forma controlada y desciende sin que la pelvis se despegue.'
+    ],
+    coachNotes: 'LOS PIES ABIERTOS Y LA PUNTA DE LOS PIES HACIA FUERA Y SUBIDOS ARRIBA, COMO LO HACE ÉL AL FINAL DEL VÍDEO'
+  },
+  {
+    id: 'ex-press-hombro-maquina',
+    name: 'Press Hombro Máquina',
+    muscleGroup: 'Hombros',
+    secondaryMuscles: ['Tríceps', 'Deltoides Anterior'],
+    equipment: 'Máquina',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=a6TKsf2xonE',
+    instructions: [
+      'Ajusta la altura del asiento para que los agarres comiencen a la altura de la mandíbula o clavícula.',
+      'Apoya la espalda firmemente en el respaldo.',
+      'Empuja hacia arriba con fuerza sin bloquear bruscamente los codos.',
+      'Baja de forma controlada sintiendo el trabajo en los deltoides.'
+    ],
+    coachNotes: 'Mantén los codos en un plano ligeramente adelantado al torso para proteger el hombro.'
+  },
+  {
+    id: 'ex-remo-pecho-apoyado',
+    name: 'Remo Pecho Apoyado',
+    muscleGroup: 'Espalda',
+    secondaryMuscles: ['Bíceps', 'Deltoides Posterior'],
+    equipment: 'Máquina',
+    difficulty: 'Intermedio',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=XUIJBJ1y_To',
+    instructions: [
+      'Ajusta la almohadilla frontal para que apoye sobre el esternón.',
+      'Toma los agarres con las muñecas alineadas.',
+      'Tira llevando los codos hacia atrás y apretando la parte media de la espalda.',
+      'Mantén el pecho firmemente apoyado sin despegarlo en ningún momento.'
+    ],
+    coachNotes: 'El apoyo en el pecho descarga la zona lumbar y permite un aislamiento dorsal perfecto.'
+  },
+  {
+    id: 'ex-extension-de-cuadriceps',
+    name: 'Extensión de Cuádriceps',
+    muscleGroup: 'Cuádriceps',
+    secondaryMuscles: ['Recto Femoral'],
+    equipment: 'Máquina',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=tM8XBRvgukg',
+    instructions: [
+      'Alinea el eje de rotación de la máquina con tus rodillas.',
+      'Coloca la almohadilla inferior sobre la parte baja de las tibias (sobre los tobillos).',
+      'Extiende las piernas hacia arriba contrayendo los cuádriceps de forma firme.',
+      'Aguanta 1 segundo arriba y baja de forma suave.'
+    ],
+    coachNotes: 'No dejes caer el peso al bajar; la fase excéntrica es crucial para la hipertrofia.'
+  },
+  {
+    id: 'ex-jalon-pecho-agarre-neutro',
+    name: 'Jalón al Pecho Agarre Neutro',
+    muscleGroup: 'Espalda',
+    secondaryMuscles: ['Bíceps', 'Braquiorradial'],
+    equipment: 'Poleas / Cables',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=OPL63nPDXjM',
+    instructions: [
+      'Coloca el agarre neutro en la polea alta.',
+      'Fija las rodillas bajo las almohadillas.',
+      'Tira desde los codos hacia abajo hasta llevar las manos a la altura de las clavículas.',
+      'Siente el estiramiento completo en la fase de retorno.'
+    ],
+    coachNotes: 'El agarre neutro protege las muñecas y permite un gran rango de movimiento.'
+  },
+  {
+    id: 'ex-curl-biceps-en-polea',
+    name: 'Curl Bíceps en Polea',
+    muscleGroup: 'Bíceps',
+    secondaryMuscles: ['Braquial Anterior', 'Antebrazos'],
+    equipment: 'Poleas / Cables',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=9vDLrSTf83I',
+    instructions: [
+      'De pie frente a la polea baja con barra recta o barra EZ.',
+      'Pega los codos a tus costados manteniéndolos estables.',
+      'Flexiona los brazos subiendo la barra hacia los hombros sin mover el torso.',
+      'Baja extendiendo el codo completamente de manera controlada.'
+    ],
+    coachNotes: 'La tensión continua del cable estimula el bíceps tanto en la contracción como en el estiramiento.'
+  },
+  {
+    id: 'ex-crunch-abdominal',
+    name: 'Crunch Abdominal',
+    muscleGroup: 'Core / Abdomen',
+    secondaryMuscles: ['Recto Abdominal'],
+    equipment: 'Peso Corporal / Calistenia',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/shorts/SaRY9Np4TzI',
+    instructions: [
+      'Túmbate bocarriba con las rodillas flexionadas y plantas de los pies apoyadas.',
+      'Coloca las manos en el pecho o tras las orejas sin tirar del cuello.',
+      'Contrae el abdomen elevando las escápulas del suelo, acercando las costillas hacia la pelvis.',
+      'Baja despacio manteniendo la tensión.'
+    ],
+    coachNotes: 'Expulsa todo el aire en la subida para contraer al 100% el recto abdominal.'
+  },
+  {
+    id: 'ex-prensa-unilateral',
+    name: 'Prensa Unilateral',
+    muscleGroup: 'Cuádriceps',
+    secondaryMuscles: ['Glúteos', 'Isquios'],
+    equipment: 'Máquina',
+    difficulty: 'Intermedio',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/shorts/eR2YIFMhCP4',
+    instructions: [
+      'Coloca un solo pie centrado en la plataforma de la prensa.',
+      'La otra pierna descansa fuera de la plataforma en posición segura.',
+      'Desciende de forma controlada hasta unos 90 grados en la rodilla activa.',
+      'Empuja con el talón y medio pie sin bloquear la rodilla.'
+    ],
+    coachNotes: 'Excelente para eliminar descompensaciones de fuerza entre ambas piernas.'
+  },
+  {
+    id: 'ex-curl-femoral-tumbado',
+    name: 'Curl Femoral Máquina Tumbado',
+    muscleGroup: 'Isquios',
+    secondaryMuscles: ['Glúteos', 'Gemelos'],
+    equipment: 'Máquina',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=c0q1foS9eUk',
+    instructions: [
+      'Túmbate boca abajo con los tobillos colocados bajo el rodillo acolchado.',
+      'Sujeta los agarres de la máquina y mantén las caderas pegadas al banco.',
+      'Flexiona las piernas llevando los talones hacia los glúteos.',
+      'Desciende en 2-3 segundos sintiendo el estiramiento en la parte posterior del muslo.'
+    ],
+    coachNotes: 'Evita levantar la pelvis del banco al doblar las rodillas.'
+  },
+  {
+    id: 'ex-press-inclinado-multipower',
+    name: 'Press Inclinado Multipower',
+    muscleGroup: 'Pecho',
+    secondaryMuscles: ['Deltoides Anterior', 'Tríceps'],
+    equipment: 'Máquina',
+    difficulty: 'Intermedio',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=WNkxMv_7weU',
+    instructions: [
+      'Coloca un banco inclinado a unos 30-45 grados centrado bajo la barra de la multipower.',
+      'Toma la barra con agarre prono algo más ancho que los hombros.',
+      'Baja la barra de forma controlada hacia la parte superior del pecho.',
+      'Empuja verticalmente hasta casi extender los brazos manteniendo la tensión en el pecho.'
+    ],
+    coachNotes: 'Excelente estabilidad guiada para enfatizar el haz clavicular del pectoral.'
+  },
+  {
+    id: 'ex-remo-agarre-estrecho',
+    name: 'Remo Agarre Estrecho',
+    muscleGroup: 'Espalda',
+    secondaryMuscles: ['Bíceps', 'Braquial Anterior'],
+    equipment: 'Poleas / Cables',
+    difficulty: 'Intermedio',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=2FdLOmhFSyc',
+    instructions: [
+      'Usa un agarre estrecho (como un maneral en V o similar).',
+      'Mantén la espalda erguida con las escápulas activas.',
+      'Tira hacia el abdomen llevando los codos pegados al cuerpo.',
+      'Extiende los brazos lentamente dejando que la espalda se estire.'
+    ],
+    coachNotes: 'Concéntrate en tirar desde los codos y no con las manos.'
+  },
+  {
+    id: 'ex-abduccion-maquina',
+    name: 'Abducción en Máquina',
+    muscleGroup: 'Glúteos',
+    secondaryMuscles: ['Glúteo Medio', 'Tensor de la Fascia Lata'],
+    equipment: 'Máquina',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=4CaBBmSWbwM',
+    instructions: [
+      'Siéntate con la espalda bien apoyada en el respaldo.',
+      'Coloca la parte externa de las rodillas contra los apoyos acolchados.',
+      'Separa las piernas hacia afuera con fuerza apretando los glúteos.',
+      'Regresa de forma controlada sin dejar que las placas se toquen.'
+    ],
+    coachNotes: 'Aguanta 1 segundo en la máxima apertura para potenciar el glúteo medio.'
+  },
+  {
+    id: 'ex-aduccion-maquina',
+    name: 'Aducción en Máquina',
+    muscleGroup: 'Pierna',
+    secondaryMuscles: ['Grácil', 'Pectíneo'],
+    equipment: 'Máquina',
+    difficulty: 'Principiante',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&auto=format&fit=crop&q=80',
+    videoUrl: 'https://www.youtube.com/watch?v=FQdh1gVcHyQ',
+    instructions: [
+      'Siéntate con la parte interna de las rodillas contra los apoyos acolchados.',
+      'Comienza con las piernas abiertas a un rango cómodo.',
+      'Cierra las piernas hacia el centro apretando firmemente los aductores.',
+      'Abre de nuevo de manera pausada y controlada.'
+    ],
+    coachNotes: 'Movimiento fluido y controlado, sin rebotes.'
+  },
+  {
+    id: 'ex-extension-triceps-polea-alta',
+    name: 'Extensión Tríceps Polea Alta',
     muscleGroup: 'Tríceps',
     secondaryMuscles: ['Antebrazos'],
     equipment: 'Poleas / Cables',
     difficulty: 'Principiante',
     thumbnailUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop&q=80',
-    videoUrl: 'https://www.youtube.com/watch?v=2-LAMcpzODU',
+    videoUrl: 'https://www.youtube.com/watch?v=xJgxMkZnkG8',
     instructions: [
-      'Coge la cuerda de la polea y da un paso atrás flexionando ligeramente el tronco.',
-      'Pega los codos a tus costados manteniéndolos estables como bisagras.',
-      'Extiende los codos y separa los extremos de la cuerda al final del recorrido.',
-      'Vuelve sintiendo el estiramiento hasta pasar los 90 grados de flexión de codo.'
+      'De pie frente a la polea alta con barra recta o cuerda.',
+      'Pega los codos a tus costados y mantén el tronco estable con ligera inclinación.',
+      'Extiende los codos empujando las manos hacia abajo hasta bloquear el tríceps.',
+      'Sube controlando hasta que los antebrazos superen la horizontal.'
     ],
-    coachNotes: 'Mantén los hombros bloqueados hacia abajo, no dejes que los codos viajen hacia adelante y atrás.'
-  },
-  {
-    id: 'ex-8',
-    name: 'Hip Thrust con Barra en Banco',
-    muscleGroup: 'Glúteos',
-    secondaryMuscles: ['Isquios', 'Core'],
-    equipment: 'Barra',
-    difficulty: 'Intermedio',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=600&auto=format&fit=crop&q=80',
-    videoUrl: 'https://www.youtube.com/watch?v=SEdqd1n01V4',
-    instructions: [
-      'Apoya la parte inferior de las escápulas en el borde del banco acolchado.',
-      'Coloca la barra acolchada justo sobre el pliegue de la cadera.',
-      'Pies firmes con tibias verticales al llegar a la máxima extensión.',
-      'Empuja con los talones, mete la pelvis en retroversión y aprieta los glúteos arriba 2 segundos.'
-    ],
-    coachNotes: 'La mirada siempre al frente (a tus rodillas), nunca hacia el techo para no hiperextender las lumbares.'
+    coachNotes: 'Los codos son bisagras inmóviles: no dejes que viajen adelante y atrás.'
   }
 ];
 
