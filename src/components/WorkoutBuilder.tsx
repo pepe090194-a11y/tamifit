@@ -41,6 +41,7 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
   const [pickerSearch, setPickerSearch] = useState('');
   const [pickerMuscle, setPickerMuscle] = useState<string>('Todos');
   const [assignedSuccess, setAssignedSuccess] = useState(false);
+  const [savedSuccess, setSavedSuccess] = useState(false);
 
   React.useEffect(() => {
     if (plans.length > 0) {
@@ -137,6 +138,51 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
     });
     setActivePlan(updatedPlan);
     setActiveDayIndex(updatedPlan.days.length - 1);
+    onSavePlan(updatedPlan);
+  };
+
+  // Remove Day from Routine
+  const handleRemoveDay = (dayIndexToRemove: number, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+
+    if (activePlan.days.length <= 1) {
+      alert('La rutina debe tener al menos un día de entrenamiento.');
+      return;
+    }
+
+    const dayToDelete = activePlan.days[dayIndexToRemove];
+    const dayTitle = dayToDelete?.title || `Día ${dayIndexToRemove + 1}`;
+
+    if (!window.confirm(`¿Estás seguro de que deseas eliminar "${dayTitle}" de la rutina?`)) {
+      return;
+    }
+
+    const updatedPlan = {
+      ...activePlan,
+      days: activePlan.days.filter((_, idx) => idx !== dayIndexToRemove)
+    };
+
+    let nextIndex = activeDayIndex;
+    if (dayIndexToRemove === activeDayIndex) {
+      nextIndex = Math.max(0, dayIndexToRemove - 1);
+    } else if (dayIndexToRemove < activeDayIndex) {
+      nextIndex = activeDayIndex - 1;
+    }
+    if (nextIndex >= updatedPlan.days.length) {
+      nextIndex = Math.max(0, updatedPlan.days.length - 1);
+    }
+
+    setActivePlan(updatedPlan);
+    setActiveDayIndex(nextIndex);
+    onSavePlan(updatedPlan);
+  };
+
+  const handleSaveCurrentPlan = () => {
+    onSavePlan(activePlan);
+    setSavedSuccess(true);
+    setTimeout(() => setSavedSuccess(false), 3500);
   };
 
   // Assign plan to client in cloud
@@ -227,7 +273,7 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
           </div>
 
           <button
-            onClick={() => onSavePlan(activePlan)}
+            onClick={handleSaveCurrentPlan}
             className="flex items-center gap-2 bg-[#E2FB3A] hover:bg-[#ccee24] text-black font-extrabold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md shadow-[#E2FB3A]/20 cursor-pointer"
           >
             <Save className="w-4 h-4" />
@@ -235,6 +281,13 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
           </button>
         </div>
       </div>
+
+      {savedSuccess && (
+        <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs font-semibold flex items-center gap-2 animate-fadeIn">
+          <Check className="w-4 h-4" />
+          <span>¡Plantilla guardada con éxito en la nube!</span>
+        </div>
+      )}
 
       {assignedSuccess && (
         <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs font-semibold flex items-center gap-2 animate-fadeIn">
@@ -247,25 +300,45 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
         {activePlan.days.map((day, idx) => {
           const isActive = idx === activeDayIndex;
+          const canDelete = activePlan.days.length > 1;
           return (
-            <button
+            <div
               key={day.id}
-              onClick={() => setActiveDayIndex(idx)}
-              className={`px-4 py-3 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 shrink-0 cursor-pointer ${
-                isActive
-                  ? 'bg-[#E2FB3A] text-black shadow-md shadow-[#E2FB3A]/15'
-                  : 'bg-[#12151D] border border-[#232938] text-gray-300 hover:text-white hover:border-[#384358]'
-              }`}
+              className="relative group shrink-0 flex items-center"
             >
-              <span>{day.title}</span>
-              <span
-                className={`text-[10px] px-1.5 py-0.2 rounded-md ${
-                  isActive ? 'bg-black/15 text-black' : 'bg-[#1C212E] text-gray-400'
+              <button
+                onClick={() => setActiveDayIndex(idx)}
+                className={`px-4 py-3 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
+                  isActive
+                    ? `bg-[#E2FB3A] text-black shadow-md shadow-[#E2FB3A]/15 ${canDelete ? 'pr-8' : ''}`
+                    : `bg-[#12151D] border border-[#232938] text-gray-300 hover:text-white hover:border-[#384358] ${canDelete ? 'group-hover:pr-8' : ''}`
                 }`}
               >
-                {day.exercises.length} ej.
-              </span>
-            </button>
+                <span>{day.title}</span>
+                <span
+                  className={`text-[10px] px-1.5 py-0.2 rounded-md ${
+                    isActive ? 'bg-black/15 text-black' : 'bg-[#1C212E] text-gray-400'
+                  }`}
+                >
+                  {day.exercises.length} ej.
+                </span>
+              </button>
+
+              {canDelete && (
+                <button
+                  type="button"
+                  onClick={(e) => handleRemoveDay(idx, e)}
+                  title={`Eliminar ${day.title}`}
+                  className={`absolute right-1.5 top-1/2 -translate-y-1/2 p-1 rounded-md transition-all cursor-pointer ${
+                    isActive
+                      ? 'text-black/60 hover:text-rose-700 hover:bg-black/10 opacity-100'
+                      : 'text-gray-500 hover:text-rose-400 hover:bg-[#1C212E] opacity-0 group-hover:opacity-100'
+                  }`}
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
           );
         })}
 
@@ -309,13 +382,27 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
               </div>
             </div>
 
-            <button
-              onClick={() => setIsExercisePickerOpen(true)}
-              className="bg-[#E2FB3A] hover:bg-[#ccee24] text-black font-extrabold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md shadow-[#E2FB3A]/20 flex items-center gap-2 self-start sm:self-auto cursor-pointer"
-            >
-              <Plus className="w-4 h-4 stroke-[2.5]" />
-              <span>Añadir Ejercicio desde el Banco</span>
-            </button>
+            <div className="flex items-center gap-2.5 self-start sm:self-auto flex-wrap">
+              {activePlan.days.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveDay(activeDayIndex)}
+                  className="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 font-bold text-xs px-3.5 py-2.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
+                  title="Eliminar este día de la rutina"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Eliminar Día</span>
+                </button>
+              )}
+
+              <button
+                onClick={() => setIsExercisePickerOpen(true)}
+                className="bg-[#E2FB3A] hover:bg-[#ccee24] text-black font-extrabold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md shadow-[#E2FB3A]/20 flex items-center gap-2 cursor-pointer"
+              >
+                <Plus className="w-4 h-4 stroke-[2.5]" />
+                <span>Añadir Ejercicio desde el Banco</span>
+              </button>
+            </div>
           </div>
 
           {/* Single Row per Exercise Table */}
