@@ -11,7 +11,7 @@ import { TrainerChat } from '@/components/TrainerChat';
 import { CheckinsView } from '@/components/CheckinsView';
 import { ClientAppView } from '@/components/ClientAppView';
 import { LoginScreen } from '@/components/LoginScreen';
-import { UserCheck, Key, ArrowLeft, RefreshCw, Smartphone } from 'lucide-react';
+import { UserCheck, Key, ArrowLeft, RefreshCw, Smartphone, LayoutDashboard, Users, Dumbbell, MessageSquare, Menu } from 'lucide-react';
 
 import {
   INITIAL_PLANS,
@@ -719,7 +719,7 @@ export default function Home() {
         />
 
         {/* Content View Area */}
-        <main className="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-7 xl:p-8 bg-[#090A0C]">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-7 xl:p-8 bg-[#090A0C] pb-24 lg:pb-8">
           {activeTab === 'dashboard' && (
             <TrainerDashboard
               clients={clients}
@@ -799,6 +799,80 @@ export default function Home() {
             />
           )}
         </main>
+
+        {/* Mobile Bottom Navigation Bar for Trainer (lg:hidden) */}
+        <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0E1014]/95 backdrop-blur-md border-t border-[#222732] flex items-center justify-around h-[calc(3.75rem+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)] px-1 select-none shadow-2xl">
+          <button
+            type="button"
+            onClick={() => setActiveTab('dashboard')}
+            className={`flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] py-1 text-[10px] font-bold transition-colors cursor-pointer ${
+              activeTab === 'dashboard' ? 'text-[#E2FB3A]' : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <LayoutDashboard className="w-4 h-4" />
+            <span>Panel</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('clients')}
+            className={`flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] py-1 text-[10px] font-bold transition-colors cursor-pointer relative ${
+              activeTab === 'clients' ? 'text-[#E2FB3A]' : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <Users className="w-4 h-4" />
+            <span>Alumnos</span>
+            {clients.length > 0 && (
+              <span className="absolute top-1 right-2 sm:right-3 text-[9px] px-1 rounded-full bg-[#1F2533] text-gray-300 font-bold border border-[#2D374B]">
+                {clients.length}
+              </span>
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('builder')}
+            className={`flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] py-1 text-[10px] font-bold transition-colors cursor-pointer ${
+              activeTab === 'builder' ? 'text-[#E2FB3A]' : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <Dumbbell className="w-4 h-4" />
+            <span>Rutinas</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setActiveTab('chat');
+              handleClearUnreadMessages();
+            }}
+            className={`flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] py-1 text-[10px] font-bold transition-colors cursor-pointer relative ${
+              activeTab === 'chat' ? 'text-[#E2FB3A]' : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span>Chat</span>
+            {!dismissedChatBadge && totalUnreadMessages > 0 && (
+              <span className="absolute top-1 right-2 sm:right-3 w-4 h-4 rounded-full bg-[#E2FB3A] text-black text-[9px] font-extrabold flex items-center justify-center shadow-sm">
+                {totalUnreadMessages}
+              </span>
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsSidebarOpen(true)}
+            className={`flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] py-1 text-[10px] font-bold transition-colors cursor-pointer relative ${
+              isSidebarOpen ? 'text-[#E2FB3A]' : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <Menu className="w-4 h-4" />
+            <span>Menú</span>
+            {!dismissedReviewsBadge && pendingReviewsCount > 0 && (
+              <span className="absolute top-1.5 right-3 w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+            )}
+          </button>
+        </nav>
       </div>
     </div>
   );

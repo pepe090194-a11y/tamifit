@@ -185,7 +185,7 @@ export const CheckinsView: React.FC<CheckinsViewProps> = ({
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
                     <div className="px-3.5 py-1.5 rounded-xl bg-[#171B24] border border-[#262D3D] text-center">
                       <span className="text-[10px] text-gray-400 block">Peso Semana</span>
                       <span className="text-sm font-extrabold text-[#E2FB3A]">{checkin.weight} kg</span>
@@ -418,7 +418,7 @@ export const CheckinsView: React.FC<CheckinsViewProps> = ({
       {/* MODAL: PUBLICAR VÍDEO FEEDBACK SEMANAL DIRECTO */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-[#12151D] border border-[#262F42] rounded-2xl w-full max-w-lg p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-[#12151D] border border-[#262F42] rounded-2xl w-full max-w-lg p-5 sm:p-6 space-y-4 shadow-2xl max-h-[90dvh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#222838]">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-[#E2FB3A]/10 text-[#E2FB3A] flex items-center justify-center">

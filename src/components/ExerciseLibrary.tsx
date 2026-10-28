@@ -310,8 +310,8 @@ export const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({
 
       {/* Modal: Inspected Exercise Technique / Video Demo */}
       {inspectedExercise && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#141822] border border-[#283042] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 space-y-5 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-[#141822] border border-[#283042] rounded-2xl w-full max-w-2xl max-h-[90dvh] overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-2xl">
             {/* Header with Edit Button */}
             <div className="flex items-center justify-between pb-3 border-b border-[#242B3C]">
               <div>
@@ -385,8 +385,8 @@ export const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({
 
       {/* Modal: Edit or Create Exercise Form */}
       {isFormModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#141822] border border-[#283042] rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 space-y-4 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-[#141822] border border-[#283042] rounded-2xl w-full max-w-xl max-h-[90dvh] overflow-y-auto p-4 sm:p-6 space-y-4 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-[#242B3C]">
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
                 {editingExerciseId ? <Edit2 className="w-4 h-4 text-[#E2FB3A]" /> : <Plus className="w-4 h-4 text-[#E2FB3A]" />}

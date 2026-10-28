@@ -227,7 +227,7 @@ export const ClientsManager: React.FC<ClientsManagerProps> = ({
   return (
     <div className="space-y-6 w-full max-w-[1750px] mx-auto pb-12">
       {/* Top Controls: Search + Filter Tabs + New Client Button */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 ${selectedClient ? 'hidden lg:flex' : 'flex'}`}>
         {/* Filters */}
         <div className="flex items-center gap-1.5 p-1 bg-[#12151D] border border-[#232938] rounded-xl self-start sm:self-auto flex-wrap">
           <button
@@ -289,7 +289,7 @@ export const ClientsManager: React.FC<ClientsManagerProps> = ({
       {/* Main Content Area: Left Client List, Right Client Detail Profile */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Client Cards List */}
-        <div className="lg:col-span-5 xl:col-span-4 space-y-3 lg:max-h-[calc(100vh-210px)] lg:overflow-y-auto lg:pr-1.5 scrollbar-thin">
+        <div className={`lg:col-span-5 xl:col-span-4 space-y-3 lg:max-h-[calc(100vh-210px)] lg:overflow-y-auto lg:pr-1.5 scrollbar-thin ${selectedClient ? 'hidden lg:block' : 'block'}`}>
           {filteredClients.length === 0 ? (
             <div className="bg-[#12151D] rounded-2xl border border-[#232938] p-8 text-center">
               <Users className="w-12 h-12 text-gray-600 mx-auto mb-3" />
@@ -379,16 +379,16 @@ export const ClientsManager: React.FC<ClientsManagerProps> = ({
         </div>
 
         {/* Client Detail Profile */}
-        <div className="lg:col-span-7 xl:col-span-8">
+        <div className={`lg:col-span-7 xl:col-span-8 ${selectedClient ? 'block' : 'hidden lg:block'}`}>
           {selectedClient ? (
             <div className="bg-[#12151D] rounded-2xl border border-[#232938] p-4 sm:p-6 space-y-5 sm:space-y-6">
               {/* Back to clients list on tablet/mobile */}
               <button
                 type="button"
                 onClick={() => onSelectClient(null)}
-                className="lg:hidden flex items-center gap-1.5 text-xs text-gray-400 hover:text-white py-1 px-2.5 rounded-lg bg-[#161A23] border border-[#232938] w-fit cursor-pointer mb-2"
+                className="lg:hidden flex items-center gap-1.5 text-xs font-bold text-white py-2 px-3 rounded-xl bg-[#1C2230] border border-[#2D364A] hover:border-[#E2FB3A] w-fit cursor-pointer mb-3 shadow-sm transition-colors"
               >
-                <ChevronRight className="w-3.5 h-3.5 rotate-180" />
+                <ChevronRight className="w-4 h-4 rotate-180 text-[#E2FB3A]" />
                 <span>Volver a la lista de alumnos</span>
               </button>
 

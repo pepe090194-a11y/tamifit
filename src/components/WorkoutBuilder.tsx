@@ -507,9 +507,14 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
 
           {/* Single Row per Exercise Table */}
           {currentDay.exercises.length > 0 ? (
-            <div className="rounded-2xl bg-[#12151D] border border-[#232938] overflow-hidden shadow-xl">
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs text-left">
+            <div className="space-y-1.5">
+              <div className="sm:hidden flex items-center justify-end gap-1 text-[10px] text-gray-500 pr-1">
+                <span className="text-[#E2FB3A]">← Desliza tabla →</span>
+                <span>para ver y editar todas las columnas</span>
+              </div>
+              <div className="rounded-2xl bg-[#12151D] border border-[#232938] overflow-hidden shadow-xl">
+                <div className="overflow-x-auto scrollbar-thin">
+                  <table className="w-full text-xs text-left min-w-[720px]">
                   <thead>
                     <tr className="bg-[#161A23] border-b border-[#232938] text-[10px] uppercase font-bold text-gray-400">
                       <th className="py-3 px-3 w-10 text-center">#</th>
@@ -653,6 +658,7 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
                 </table>
               </div>
             </div>
+          </div>
           ) : (
             <div className="p-12 text-center rounded-2xl bg-[#12151D] border border-dashed border-[#283144]">
               <Dumbbell className="w-10 h-10 text-gray-600 mx-auto mb-2" />
@@ -674,8 +680,8 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
 
       {/* Modal: Exercise Picker from Bank */}
       {isExercisePickerOpen && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#141822] border border-[#283042] rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-[#141822] border border-[#283042] rounded-2xl w-full max-w-2xl max-h-[90dvh] flex flex-col shadow-2xl">
             {/* Header */}
             <div className="p-5 border-b border-[#242B3C] flex items-center justify-between">
               <div>
