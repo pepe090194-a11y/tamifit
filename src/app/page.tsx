@@ -716,6 +716,7 @@ export default function Home() {
           onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
           trainerProfile={trainerProfile}
           onUpdateTrainerAvatar={handleUpdateTrainerAvatar}
+          onLogout={handleTrainerLogout}
         />
 
         {/* Content View Area */}

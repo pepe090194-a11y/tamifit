@@ -100,7 +100,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar Navigation Container */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 lg:w-64 xl:w-72 bg-[#0E1014] border-r border-[#222732] flex flex-col h-screen select-none shrink-0 lg:static transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 lg:w-64 xl:w-72 bg-[#0E1014] border-r border-[#222732] flex flex-col h-[100dvh] max-h-[100dvh] select-none shrink-0 lg:static transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'
         }`}
       >
@@ -176,12 +176,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </button>
             );
           })}
+
+          {onLogout && (
+            <div className="pt-2 mt-2 border-t border-[#1C202B]">
+              <button
+                type="button"
+                onClick={() => {
+                  onLogout();
+                  onClose?.();
+                }}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 transition-all cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  <LogOut className="w-4 h-4 text-rose-400" />
+                  <span>Cerrar Sesión</span>
+                </div>
+                <span className="text-[10px] bg-rose-500/15 text-rose-300 font-semibold px-2 py-0.5 rounded-md">
+                  Salir
+                </span>
+              </button>
+            </div>
+          )}
         </nav>
 
       {/* Trainer Info Card at Bottom */}
-      <div className="p-4 border-t border-[#222732] bg-[#0A0C0F]/80">
+      <div className="p-3 sm:p-4 border-t border-[#222732] bg-[#0A0C0F]/95 pb-[max(1rem,calc(env(safe-area-inset-bottom,0px)+0.75rem))] space-y-2.5">
         <div className="flex items-center justify-between p-2 rounded-xl bg-[#14171E] border border-[#232936]">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             <button
               type="button"
               onClick={() => setIsAvatarModalOpen(true)}
@@ -192,10 +213,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <img
                   src={trainerProfile.avatar}
                   alt={trainerProfile.name || 'Entrenadora'}
-                  className="w-11 h-11 rounded-full object-cover border-2 border-[#E2FB3A]"
+                  className="w-10 h-10 rounded-full object-cover border-2 border-[#E2FB3A]"
                 />
               ) : (
-                <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#E2FB3A] to-lime-200 text-black flex items-center justify-center font-black text-sm">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#E2FB3A] to-lime-200 text-black flex items-center justify-center font-black text-sm">
                   TF
                 </div>
               )}
@@ -203,7 +224,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <Camera className="w-4 h-4 text-[#E2FB3A]" />
               </div>
               {/* Always visible camera badge */}
-              <div className="absolute -bottom-0.5 -right-0.5 bg-[#E2FB3A] text-black p-1 rounded-full shadow-md">
+              <div className="absolute -bottom-0.5 -right-0.5 bg-[#E2FB3A] text-black p-0.5 rounded-full shadow-md">
                 <Camera className="w-2.5 h-2.5 stroke-[2.5]" />
               </div>
             </button>
@@ -222,19 +243,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </button>
             </div>
           </div>
-          <div className="flex items-center gap-1 shrink-0">
-            {onLogout && (
-              <button 
-                type="button"
-                onClick={onLogout}
-                title="Cerrar sesión de entrenador" 
-                className="p-1.5 text-gray-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors cursor-pointer"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            )}
-          </div>
         </div>
+
+        {onLogout && (
+          <button 
+            type="button"
+            onClick={() => {
+              onLogout();
+              onClose?.();
+            }}
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/25 text-xs font-bold transition-all cursor-pointer"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Cerrar Sesión</span>
+          </button>
+        )}
       </div>
     </aside>
 

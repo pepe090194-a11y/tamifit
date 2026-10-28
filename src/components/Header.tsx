@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Plus, Menu, Camera } from 'lucide-react';
+import { Search, Plus, Menu, Camera, LogOut } from 'lucide-react';
 import { TrainerProfile } from '@/types';
 import { AvatarEditModal } from './AvatarEditModal';
 
@@ -14,6 +14,7 @@ interface HeaderProps {
   onToggleSidebar?: () => void;
   trainerProfile?: TrainerProfile;
   onUpdateTrainerAvatar?: (newUrl: string) => Promise<void> | void;
+  onLogout?: () => void;
 }
 
 const TAB_TITLES: Record<string, { title: string; subtitle: string }> = {
@@ -51,7 +52,8 @@ export const Header: React.FC<HeaderProps> = ({
   setSearchQuery,
   onToggleSidebar,
   trainerProfile,
-  onUpdateTrainerAvatar
+  onUpdateTrainerAvatar,
+  onLogout
 }) => {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
 
@@ -124,7 +126,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Trainer Profile Avatar with direct click to change */}
         {trainerProfile && (
-          <div className="pl-1 sm:pl-2 border-l border-[#222732] flex items-center">
+          <div className="pl-1 sm:pl-2 border-l border-[#222732] flex items-center gap-1.5 sm:gap-2">
             <button
               type="button"
               onClick={() => setIsAvatarModalOpen(true)}
@@ -140,6 +142,17 @@ export const Header: React.FC<HeaderProps> = ({
                 <Camera className="w-2.5 h-2.5 stroke-[2.5]" />
               </div>
             </button>
+
+            {onLogout && (
+              <button
+                type="button"
+                onClick={onLogout}
+                title="Cerrar sesión de entrenadora"
+                className="p-1.5 sm:p-2 rounded-xl bg-[#151820] border border-[#262C38] text-gray-400 hover:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30 transition-colors shrink-0 cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            )}
           </div>
         )}
       </div>
