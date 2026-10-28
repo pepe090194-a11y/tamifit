@@ -26,6 +26,7 @@ import {
   deleteClientFromCloud,
   subscribeToPlans,
   savePlanToCloud,
+  deletePlanFromCloud,
   subscribeToExercises,
   saveExerciseToCloud,
   deleteExerciseFromCloud,
@@ -58,6 +59,7 @@ export default function Home() {
   
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [activeChatClientId, setActiveChatClientId] = useState<string>('');
+  const [selectedPlanIdForBuilder, setSelectedPlanIdForBuilder] = useState<string | null>(null);
   
   // Student Login Session State
   const [loggedStudent, setLoggedStudent] = useState<Client | null>(null);
@@ -427,6 +429,38 @@ export default function Home() {
     await savePlanToCloud(updatedPlan);
   };
 
+  const handleDeletePlan = async (planId: string) => {
+    await deletePlanFromCloud(planId);
+    setPlans(prev => prev.filter(p => p.id !== planId));
+  };
+
+  const handleCreateCustomPlan = async (clientId: string, clientName: string) => {
+    const newPlanId = `plan-${Date.now()}`;
+    const newPlan: WorkoutPlan = {
+      id: newPlanId,
+      title: `Plan Personalizado • ${clientName}`,
+      description: `Rutina personalizada para ${clientName}`,
+      level: 'Intermedio',
+      durationWeeks: 8,
+      createdAt: new Date().toISOString().split('T')[0],
+      days: [
+        {
+          id: `day-${Date.now()}-1`,
+          title: 'Día 1: Torso / Fuerza',
+          subtitle: 'Sesión principal',
+          targetMuscleGroup: 'Cuerpo Completo',
+          estimatedTimeMinutes: 60,
+          exercises: []
+        }
+      ]
+    };
+    await handleSavePlan(newPlan);
+    await handleAssignPlanToClient(clientId, newPlanId, newPlan.title);
+    setSelectedPlanIdForBuilder(newPlanId);
+    setActiveTab('builder');
+    setSelectedClient(null);
+  };
+
   const handleAssignPlanToClient = async (clientId: string, planId: string, planTitle: string) => {
     await updateClientInCloud(clientId, { currentPlanId: planId, currentPlanName: planTitle });
     setClients(prev => prev.map(c => c.id === clientId ? { ...c, currentPlanId: planId, currentPlanName: planTitle } : c));
@@ -712,6 +746,13 @@ export default function Home() {
               onDeleteClient={handleDeleteClient}
               onUpdateClientWorkoutLogs={handleUpdateClientWorkoutLogs}
               onUpdateClientAvatar={handleUpdateClientAvatar}
+              onAssignPlanToClient={handleAssignPlanToClient}
+              onEditPlan={(planId) => {
+                setSelectedPlanIdForBuilder(planId);
+                setActiveTab('builder');
+                setSelectedClient(null);
+              }}
+              onCreateCustomPlan={handleCreateCustomPlan}
             />
           )}
 
@@ -722,6 +763,8 @@ export default function Home() {
               clients={clients}
               onSavePlan={handleSavePlan}
               onAssignPlanToClient={handleAssignPlanToClient}
+              selectedPlanId={selectedPlanIdForBuilder}
+              onDeletePlan={handleDeletePlan}
             />
           )}
 

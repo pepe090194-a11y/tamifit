@@ -176,6 +176,11 @@ export const savePlanToCloud = async (plan: WorkoutPlan): Promise<void> => {
   await setDoc(docRef, plan, { merge: true });
 };
 
+export const deletePlanFromCloud = async (planId: string): Promise<void> => {
+  const docRef = doc(db, PLANS_COLLECTION, planId);
+  await deleteDoc(docRef);
+};
+
 // --- Biblioteca de ejercicios ---
 
 export const subscribeToExercises = (callback: (exercises: Exercise[]) => void) => {

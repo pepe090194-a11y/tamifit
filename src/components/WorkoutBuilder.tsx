@@ -26,6 +26,8 @@ interface WorkoutBuilderProps {
   clients: Client[];
   onSavePlan: (plan: WorkoutPlan) => void;
   onAssignPlanToClient?: (clientId: string, planId: string, planTitle: string) => void;
+  selectedPlanId?: string | null;
+  onDeletePlan?: (planId: string) => void;
 }
 
 export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
@@ -33,7 +35,9 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
   exercises,
   clients,
   onSavePlan,
-  onAssignPlanToClient
+  onAssignPlanToClient,
+  selectedPlanId,
+  onDeletePlan
 }) => {
   const [activePlan, setActivePlan] = useState<WorkoutPlan>(plans[0]);
   const [activeDayIndex, setActiveDayIndex] = useState<number>(0);
@@ -44,6 +48,14 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
   const [savedSuccess, setSavedSuccess] = useState(false);
 
   React.useEffect(() => {
+    if (selectedPlanId) {
+      const match = plans.find(p => p.id === selectedPlanId);
+      if (match) {
+        setActivePlan(match);
+        setActiveDayIndex(0);
+        return;
+      }
+    }
     if (plans.length > 0) {
       const match = plans.find(p => p.id === activePlan?.id);
       if (match) {
@@ -52,7 +64,7 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
         setActivePlan(plans[0]);
       }
     }
-  }, [plans]);
+  }, [plans, selectedPlanId]);
 
   const currentDay = activePlan?.days?.[activeDayIndex] || activePlan?.days?.[0];
 
@@ -185,6 +197,65 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
     setTimeout(() => setSavedSuccess(false), 3500);
   };
 
+  // Create brand new workout plan
+  const handleCreateNewPlan = () => {
+    const newPlanId = `plan-${Date.now()}`;
+    const newPlan: WorkoutPlan = {
+      id: newPlanId,
+      title: `Nueva Rutina ${plans.length + 1}`,
+      description: 'Objetivo y notas generales de la rutina...',
+      level: 'Intermedio',
+      durationWeeks: 8,
+      createdAt: new Date().toISOString().split('T')[0],
+      days: [
+        {
+          id: `day-${Date.now()}-1`,
+          title: 'Día 1: Torso / Hipertrofia',
+          subtitle: 'Sesión principal',
+          targetMuscleGroup: 'Cuerpo Completo',
+          estimatedTimeMinutes: 60,
+          exercises: []
+        }
+      ]
+    };
+    onSavePlan(newPlan);
+    setActivePlan(newPlan);
+    setActiveDayIndex(0);
+  };
+
+  // Duplicate current active plan
+  const handleDuplicateCurrentPlan = () => {
+    if (!activePlan) return;
+    const dupPlanId = `plan-${Date.now()}`;
+    const dupPlan: WorkoutPlan = {
+      ...JSON.parse(JSON.stringify(activePlan)),
+      id: dupPlanId,
+      title: `${activePlan.title} (Copia)`,
+      createdAt: new Date().toISOString().split('T')[0]
+    };
+    onSavePlan(dupPlan);
+    setActivePlan(dupPlan);
+    setActiveDayIndex(0);
+  };
+
+  // Delete current plan
+  const handleDeleteCurrentPlan = () => {
+    if (plans.length <= 1) {
+      alert('Debe existir al menos una rutina en el sistema.');
+      return;
+    }
+    if (!window.confirm(`¿Estás seguro de que deseas eliminar la rutina "${activePlan.title}"?`)) {
+      return;
+    }
+    const targetToDelete = activePlan.id;
+    const remaining = plans.filter(p => p.id !== targetToDelete);
+    if (remaining.length > 0) {
+      setActivePlan(remaining[0]);
+      setActiveDayIndex(0);
+    }
+    onDeletePlan?.(targetToDelete);
+  };
+
   // Assign plan to client in cloud
   const handleAssignToClient = (clientId: string) => {
     const targetClient = clients.find(c => c.id === clientId);
@@ -209,28 +280,57 @@ export const WorkoutBuilder: React.FC<WorkoutBuilderProps> = ({
       {/* Top Header Plan bar */}
       <div className="p-6 rounded-2xl bg-[#12151D] border border-[#232938] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          {plans.length > 1 && (
-            <div className="mb-2 flex items-center gap-2">
-              <span className="text-[10px] uppercase font-bold text-gray-500">Plantilla activa:</span>
-              <select
-                value={activePlan.id}
-                onChange={(e) => {
-                  const target = plans.find(p => p.id === e.target.value);
-                  if (target) {
-                    setActivePlan(target);
-                    setActiveDayIndex(0);
-                  }
-                }}
-                className="bg-[#171B24] border border-[#2A3346] text-xs font-bold text-[#E2FB3A] px-2.5 py-1 rounded-lg focus:outline-none cursor-pointer"
+          <div className="mb-2 flex items-center gap-2 flex-wrap">
+            <span className="text-[10px] uppercase font-bold text-gray-500">Plantilla activa:</span>
+            <select
+              value={activePlan?.id || ''}
+              onChange={(e) => {
+                const target = plans.find(p => p.id === e.target.value);
+                if (target) {
+                  setActivePlan(target);
+                  setActiveDayIndex(0);
+                }
+              }}
+              className="bg-[#171B24] border border-[#2A3346] text-xs font-bold text-[#E2FB3A] px-2.5 py-1 rounded-lg focus:outline-none cursor-pointer"
+            >
+              {plans.map(p => (
+                <option key={p.id} value={p.id} className="bg-[#171B24] text-white">
+                  {p.title} ({p.days?.length || 0} días)
+                </option>
+              ))}
+            </select>
+
+            <button
+              type="button"
+              onClick={handleCreateNewPlan}
+              className="bg-[#1E2433] hover:bg-[#283145] text-xs text-gray-200 hover:text-white font-bold px-2.5 py-1 rounded-lg border border-[#2F394E] flex items-center gap-1 transition-all cursor-pointer"
+              title="Crear una nueva rutina desde cero"
+            >
+              <Plus className="w-3.5 h-3.5 text-[#E2FB3A]" />
+              <span>Nueva Rutina</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDuplicateCurrentPlan}
+              className="bg-[#1E2433] hover:bg-[#283145] text-xs text-gray-200 hover:text-white font-bold px-2.5 py-1 rounded-lg border border-[#2F394E] flex items-center gap-1 transition-all cursor-pointer"
+              title="Duplicar esta rutina para personalizarla"
+            >
+              <Copy className="w-3.5 h-3.5 text-gray-400" />
+              <span>Duplicar</span>
+            </button>
+
+            {plans.length > 1 && onDeletePlan && (
+              <button
+                type="button"
+                onClick={handleDeleteCurrentPlan}
+                className="text-gray-500 hover:text-rose-400 hover:bg-rose-500/10 p-1.5 rounded-lg border border-transparent hover:border-rose-500/20 transition-all cursor-pointer"
+                title="Eliminar esta rutina"
               >
-                {plans.map(p => (
-                  <option key={p.id} value={p.id} className="bg-[#171B24] text-white">
-                    {p.title} ({p.days?.length || 0} días)
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
           <div className="flex items-center gap-2">
             <input
               type="text"

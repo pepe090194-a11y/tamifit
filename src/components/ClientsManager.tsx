@@ -27,7 +27,8 @@ import {
   RefreshCw,
   Info,
   CheckCircle2,
-  ChevronRight
+  ChevronRight,
+  Edit3
 } from 'lucide-react';
 import { Client, WorkoutPlan, ClientDailyLog, ClientExerciseLog } from '@/types';
 import { AvatarEditModal } from '@/components/AvatarEditModal';
@@ -43,6 +44,9 @@ interface ClientsManagerProps {
   onDeleteClient?: (clientId: string) => void;
   onUpdateClientWorkoutLogs?: (clientId: string, logs: ClientDailyLog[]) => void;
   onUpdateClientAvatar?: (clientId: string, newAvatarUrl: string) => Promise<void> | void;
+  onAssignPlanToClient?: (clientId: string, planId: string, planTitle: string) => void;
+  onEditPlan?: (planId: string) => void;
+  onCreateCustomPlan?: (clientId: string, clientName: string) => void;
 }
 
 export const ClientsManager: React.FC<ClientsManagerProps> = ({
@@ -55,12 +59,16 @@ export const ClientsManager: React.FC<ClientsManagerProps> = ({
   onUpdateClientNotes,
   onDeleteClient,
   onUpdateClientWorkoutLogs,
-  onUpdateClientAvatar
+  onUpdateClientAvatar,
+  onAssignPlanToClient,
+  onEditPlan,
+  onCreateCustomPlan
 }) => {
   const [filter, setFilter] = useState<'all' | 'active' | 'pending_review' | 'paused'>('all');
   const [search, setSearch] = useState('');
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const [isNewClientModalOpen, setIsNewClientModalOpen] = useState(false);
+  const [planAssignedSuccess, setPlanAssignedSuccess] = useState(false);
   
   // New Client Form State
   const [newName, setNewName] = useState('');
@@ -600,17 +608,70 @@ export const ClientsManager: React.FC<ClientsManagerProps> = ({
                   </div>
 
                   {/* Active Assigned Routine */}
-                  <div className="p-4 rounded-xl bg-[#171B24] border border-[#242A39] flex items-center justify-between">
+                  <div className="p-4 rounded-xl bg-[#171B24] border border-[#242A39] flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#E2FB3A]/10 text-[#E2FB3A] flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-xl bg-[#E2FB3A]/10 text-[#E2FB3A] flex items-center justify-center shrink-0">
                         <Dumbbell className="w-5 h-5" />
                       </div>
                       <div>
-                        <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Plan Activo</span>
-                        <h4 className="text-xs font-bold text-white">
-                          {selectedClient.currentPlanName || 'Sin rutina asignada'}
-                        </h4>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Plan Activo del Alumno</span>
+                          {planAssignedSuccess && (
+                            <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                              ✓ Cambiado con éxito
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <select
+                            value={selectedClient.currentPlanId || (plans[0]?.id || '')}
+                            onChange={(e) => {
+                              const chosen = plans.find(p => p.id === e.target.value);
+                              if (chosen) {
+                                onAssignPlanToClient?.(selectedClient.id, chosen.id, chosen.title);
+                                setPlanAssignedSuccess(true);
+                                setTimeout(() => setPlanAssignedSuccess(false), 3000);
+                              }
+                            }}
+                            className="bg-[#1C212E] border border-[#2D364A] text-xs font-bold text-white px-3 py-1.5 rounded-lg focus:outline-none focus:border-[#E2FB3A] cursor-pointer"
+                          >
+                            {plans.map(p => (
+                              <option key={p.id} value={p.id} className="bg-[#1C212E] text-white">
+                                {p.title} ({p.days?.length || 0} días)
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 flex-wrap self-start md:self-auto">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const targetPlanId = selectedClient.currentPlanId || plans[0]?.id;
+                          if (targetPlanId) {
+                            onEditPlan?.(targetPlanId);
+                          }
+                        }}
+                        className="bg-[#E2FB3A] hover:bg-[#ccee24] text-black font-extrabold text-xs px-3.5 py-2 rounded-xl transition-all shadow-md shadow-[#E2FB3A]/20 flex items-center gap-1.5 cursor-pointer"
+                        title="Modificar los ejercicios, series, cargas o días de esta rutina en el Creador"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                        <span>Modificar Rutina</span>
+                      </button>
+
+                      {onCreateCustomPlan && (
+                        <button
+                          type="button"
+                          onClick={() => onCreateCustomPlan(selectedClient.id, selectedClient.name)}
+                          className="bg-[#1C212E] hover:bg-[#252C3D] text-gray-200 hover:text-white border border-[#2F394E] font-bold text-xs px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
+                          title="Crear un plan exclusivo y personalizado para este alumno"
+                        >
+                          <Plus className="w-3.5 h-3.5 text-[#E2FB3A]" />
+                          <span>Nuevo Plan Exclusivo</span>
+                        </button>
+                      )}
                     </div>
                   </div>
 
@@ -653,13 +714,30 @@ export const ClientsManager: React.FC<ClientsManagerProps> = ({
                       </p>
                     </div>
 
-                    <button
-                      onClick={() => onOpenChatWith(selectedClient.id)}
-                      className="self-start sm:self-auto bg-[#E2FB3A] hover:bg-[#d6f028] text-black font-extrabold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-md shadow-[#E2FB3A]/20 transition-all cursor-pointer"
-                    >
-                      <MessageSquare className="w-3.5 h-3.5" />
-                      <span>Dar Feedback en Chat</span>
-                    </button>
+                    <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const targetPlanId = selectedClient.currentPlanId || plans[0]?.id;
+                          if (targetPlanId) {
+                            onEditPlan?.(targetPlanId);
+                          }
+                        }}
+                        className="bg-[#1C212E] hover:bg-[#252C3D] text-[#E2FB3A] border border-[#2E374C] font-bold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer"
+                        title="Modificar los ejercicios y días de la rutina activa"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                        <span>Modificar Rutina</span>
+                      </button>
+
+                      <button
+                        onClick={() => onOpenChatWith(selectedClient.id)}
+                        className="bg-[#E2FB3A] hover:bg-[#d6f028] text-black font-extrabold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-md shadow-[#E2FB3A]/20 transition-all cursor-pointer"
+                      >
+                        <MessageSquare className="w-3.5 h-3.5" />
+                        <span>Dar Feedback en Chat</span>
+                      </button>
+                    </div>
                   </div>
 
                   {selectedClient.workoutLogs && selectedClient.workoutLogs.length > 0 ? (

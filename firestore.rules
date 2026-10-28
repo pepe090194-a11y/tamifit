@@ -12,7 +12,8 @@ service cloud.firestore {
     // Planes de entrenamiento (plans)
     match /plans/{planId} {
       allow read: if true;
-      allow write: if request.resource.data.title is string;
+      allow create, update: if request.resource.data.title is string;
+      allow delete: if true;
     }
     
     // Banco de ejercicios (exercises)
