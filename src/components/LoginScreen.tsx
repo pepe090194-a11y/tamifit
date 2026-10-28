@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Lock, User, Eye, EyeOff, ArrowRight, ShieldCheck, Sparkles, UserCheck } from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ArrowRight, ShieldCheck } from 'lucide-react';
 
 interface LoginScreenProps {
   onLogin: (username: string, pass: string) => Promise<{ success: boolean; error?: string } | boolean>;
@@ -108,12 +108,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
     }
   };
 
-  const handleQuickLogin = (quickUser: string, quickPass: string) => {
-    setUsername(quickUser);
-    setPassword(quickPass);
-    setErrorMessage('');
-  };
-
   return (
     <div className="login-container fixed inset-0 w-full h-[100dvh] max-h-[100dvh] bg-[#07090C] text-[#F3F4F6] flex flex-col items-center justify-center p-3 sm:p-6 select-none touch-none overscroll-none overflow-hidden">
       {/* Ambient background glow */}
@@ -147,32 +141,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             </div>
           </div>
 
-          {/* Quick Demo Access Chips */}
-          <div className="grid grid-cols-2 gap-1.5 pt-1">
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('test', 'TAMI-8978')}
-              className="px-2.5 py-1.5 rounded-xl bg-[#181D2A] hover:bg-[#202738] border border-[#2B3548] text-left transition-all cursor-pointer group"
-            >
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#E2FB3A]">
-                <UserCheck className="w-3 h-3" />
-                <span>Alumno Demo</span>
-              </div>
-              <p className="text-[9px] text-gray-400 font-mono mt-0.5">test / TAMI-8978</p>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('tamifit', 'alm2026')}
-              className="px-2.5 py-1.5 rounded-xl bg-[#181D2A] hover:bg-[#202738] border border-[#2B3548] text-left transition-all cursor-pointer group"
-            >
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-white">
-                <Sparkles className="w-3 h-3 text-[#E2FB3A]" />
-                <span>Entrenadora</span>
-              </div>
-              <p className="text-[9px] text-gray-400 font-mono mt-0.5">tamifit / alm2026</p>
-            </button>
-          </div>
-
           {/* Error Message */}
           {errorMessage && (
             <div className="bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-2 animate-fadeIn">
@@ -197,7 +165,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Tu usuario (ej. test o tamifit)"
+                  placeholder="Tu usuario"
                   className="w-full bg-[#181D2A] text-base sm:text-sm text-white placeholder-gray-500 pl-10 pr-3 py-2.5 sm:py-3 rounded-xl border border-[#2A3348] focus:outline-none focus:border-[#E2FB3A] focus:ring-1 focus:ring-[#E2FB3A] transition-all"
                 />
               </div>
