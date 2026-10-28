@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Alumnos (clients)
+    match /clients/{clientId} {
+      allow read: if true;
+      allow create, update: if request.resource.data.name is string;
+      allow delete: if true;
+    }
+    
+    // Planes de entrenamiento (plans)
+    match /plans/{planId} {
+      allow read: if true;
+      allow write: if request.resource.data.title is string;
+    }
+    
+    // Banco de ejercicios (exercises)
+    match /exercises/{exerciseId} {
+      allow read: if true;
+      allow write: if request.resource.data.name is string;
+    }
+    
+    // Mensajes de chat (messages)
+    match /messages/{messageId} {
+      allow read: if true;
+      allow create: if request.resource.data.text is string 
+                   && request.resource.data.clientId is string;
+      allow update, delete: if true;
+    }
+  }
+}
