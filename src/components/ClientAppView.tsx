@@ -240,6 +240,27 @@ export const ClientAppView: React.FC<ClientAppViewProps> = ({
     handleSaveWorkoutLog();
   };
 
+  const handleOpenExerciseVideo = (item: WorkoutExercise) => {
+    const fullEx = exercises.find(e => e.id === item.exerciseId) || {
+      id: item.exerciseId || item.id,
+      name: item.exerciseName,
+      videoUrl: item.videoUrl,
+      thumbnailUrl: item.thumbnailUrl,
+      coachNotes: item.notes,
+      muscleGroup: item.muscleGroup,
+      equipment: 'Máquina',
+      difficulty: 'Intermedio',
+      instructions: []
+    } as Exercise;
+
+    if (fullEx && (fullEx.videoUrl || item.videoUrl)) {
+      setActiveVideoExercise({
+        ...fullEx,
+        videoUrl: fullEx.videoUrl || item.videoUrl
+      });
+    }
+  };
+
   const handleSendMobileChat = (e: React.FormEvent) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
@@ -614,18 +635,33 @@ export const ClientAppView: React.FC<ClientAppViewProps> = ({
                               {/* Header del Ejercicio */}
                               <div className="flex items-center justify-between gap-2 sm:gap-3">
                                 <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-                                  <img
-                                    src={item.thumbnailUrl}
-                                    alt={item.exerciseName}
-                                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover border border-[#2B3549] shrink-0"
-                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => handleOpenExerciseVideo(item)}
+                                    className="relative group shrink-0 cursor-pointer"
+                                    title="Toca para ver vídeo demostrativo"
+                                  >
+                                    <img
+                                      src={item.thumbnailUrl}
+                                      alt={item.exerciseName}
+                                      className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl object-cover border border-[#2B3549] group-hover:border-[#E2FB3A] transition-colors"
+                                    />
+                                    <div className="absolute inset-0 bg-black/35 group-hover:bg-black/55 rounded-xl flex items-center justify-center transition-colors">
+                                      <Play className="w-3.5 h-3.5 text-[#E2FB3A] fill-[#E2FB3A]" />
+                                    </div>
+                                  </button>
                                   <div className="min-w-0 flex-1">
                                     <span className="text-[10px] font-bold text-[#E2FB3A] uppercase tracking-wider block truncate">
                                       #{exIdx + 1} • {item.muscleGroup}
                                     </span>
-                                    <h5 className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleOpenExerciseVideo(item)}
+                                      className="text-left text-xs sm:text-sm font-bold text-white hover:text-[#E2FB3A] transition-colors leading-tight truncate block w-full cursor-pointer"
+                                      title="Toca para ver vídeo demostrativo"
+                                    >
                                       {item.exerciseName}
-                                    </h5>
+                                    </button>
                                     {item.notes && (
                                       <p className="text-[10px] sm:text-[11px] text-gray-400 mt-0.5 italic flex items-center gap-1 truncate">
                                         <Info className="w-3 h-3 text-[#E2FB3A] shrink-0" />
@@ -638,11 +674,8 @@ export const ClientAppView: React.FC<ClientAppViewProps> = ({
                                 <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                                   <button
                                     type="button"
-                                    onClick={() => {
-                                      const fullEx = exercises.find(e => e.id === item.exerciseId);
-                                      if (fullEx) setActiveVideoExercise(fullEx);
-                                    }}
-                                    className="p-2 sm:p-2.5 rounded-xl bg-[#1B2130] text-gray-300 hover:text-[#E2FB3A] cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center"
+                                    onClick={() => handleOpenExerciseVideo(item)}
+                                    className="p-2 sm:p-2.5 rounded-xl bg-[#1B2130] hover:bg-[#252E42] text-gray-300 hover:text-[#E2FB3A] cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors"
                                     title="Ver técnica en vídeo"
                                   >
                                     <Play className="w-3.5 h-3.5" />
@@ -1056,18 +1089,33 @@ export const ClientAppView: React.FC<ClientAppViewProps> = ({
             </div>
           )}
 
-          {/* Video Modal inside Mobile Shell */}
+          {/* Video Modal inside Mobile Shell - FIXED TO VIEWPORT */}
           {activeVideoExercise && (
-            <div className="absolute inset-0 bg-black/85 z-50 p-4 flex flex-col justify-center animate-fadeIn">
-              <div className="bg-[#141822] border border-[#272F3F] rounded-2xl p-4 space-y-3">
+            <div 
+              className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md p-4 flex items-center justify-center animate-fadeIn"
+              onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                  setActiveVideoExercise(null);
+                }
+              }}
+            >
+              <div className="bg-[#141822] border border-[#272F3F] rounded-2xl p-4 sm:p-5 space-y-3.5 w-full max-w-lg shadow-2xl relative my-auto">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-white">{activeVideoExercise.name}</h4>
-                  <button type="button" onClick={() => setActiveVideoExercise(null)} className="text-gray-400 cursor-pointer">
-                    <X className="w-4 h-4" />
+                  <div className="min-w-0 pr-3">
+                    <span className="text-[10px] text-[#E2FB3A] font-bold uppercase tracking-wider block">Vídeo de Técnica</span>
+                    <h4 className="text-sm sm:text-base font-extrabold text-white truncate">{activeVideoExercise.name}</h4>
+                  </div>
+                  <button 
+                    type="button" 
+                    onClick={() => setActiveVideoExercise(null)} 
+                    className="p-1.5 rounded-lg bg-[#1D2330] hover:bg-[#283144] text-gray-300 hover:text-white cursor-pointer transition-colors shrink-0"
+                    title="Cerrar vídeo"
+                  >
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
 
-                <div className="aspect-video bg-black rounded-xl overflow-hidden relative">
+                <div className="aspect-video bg-black rounded-xl overflow-hidden relative shadow-lg border border-[#262E40]">
                   <VideoPlayer
                     url={activeVideoExercise.videoUrl}
                     poster={activeVideoExercise.thumbnailUrl}
@@ -1076,18 +1124,37 @@ export const ClientAppView: React.FC<ClientAppViewProps> = ({
                   />
                 </div>
 
+                <div className="flex items-center justify-between text-xs pt-0.5">
+                  <div className="flex items-center gap-1.5 text-[11px] text-gray-400">
+                    <PlayCircle className="w-3.5 h-3.5 text-[#E2FB3A]" />
+                    <span>Demostración guiada</span>
+                  </div>
+                  {activeVideoExercise.videoUrl && activeVideoExercise.videoUrl.startsWith('http') && (
+                    <a
+                      href={activeVideoExercise.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] font-bold text-[#E2FB3A] hover:underline flex items-center gap-1 bg-[#1A2218] px-2.5 py-1.5 rounded-lg border border-[#E2FB3A]/25 transition-all"
+                    >
+                      <span>Abrir en YouTube</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
+                </div>
+
                 {activeVideoExercise.coachNotes && (
-                  <p className="text-[10px] text-[#E2FB3A] bg-[#101217] p-2 rounded-lg border border-[#1E232E]">
-                    Coach: {activeVideoExercise.coachNotes}
-                  </p>
+                  <div className="text-xs text-gray-200 bg-[#10141D] p-3 rounded-xl border border-[#1E2535] space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-[#E2FB3A] block">Indicación del Coach:</span>
+                    <p className="leading-relaxed font-medium">{activeVideoExercise.coachNotes}</p>
+                  </div>
                 )}
               </div>
             </div>
           )}
 
-          {/* Celebration Screen */}
+          {/* Celebration Screen - FIXED TO VIEWPORT */}
           {isWorkoutFinished && (
-            <div className="absolute inset-0 bg-black/90 z-50 p-6 flex flex-col items-center justify-center text-center space-y-4 animate-scaleUp">
+            <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 p-6 flex flex-col items-center justify-center text-center space-y-4 animate-scaleUp">
               <div className="w-16 h-16 rounded-full bg-[#E2FB3A] text-black flex items-center justify-center shadow-lg shadow-[#E2FB3A]/30">
                 <Award className="w-8 h-8" />
               </div>
