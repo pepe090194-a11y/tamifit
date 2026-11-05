@@ -235,8 +235,8 @@ export const LandingPage: React.FC = () => {
             backgroundImage: "url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=2000&q=85')"
           }}
         >
-          {/* Viñeta cinematográfica semitransparente: deja ver el gimnasio y resalta el contenido */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#06080C]/55 via-[#06080C]/25 to-[#06080C]/80" />
+          {/* Viñeta cinematográfica semitransparente oscurecida para máxima legibilidad */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#06080C]/80 via-[#06080C]/55 to-[#06080C]/90" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(226,251,58,0.12)_0%,transparent_70%)]" />
         </div>
 
@@ -313,8 +313,8 @@ export const LandingPage: React.FC = () => {
           backgroundImage: "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=85')"
         }}
       >
-        {/* Degradado semitransparente deportivo con halo lime */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#06080C]/70 via-[#06080C]/35 to-[#06080C]/80" />
+        {/* Degradado semitransparente deportivo con halo lime oscurecido para máxima legibilidad */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#06080C]/85 via-[#06080C]/60 to-[#06080C]/90" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(226,251,58,0.10)_0%,transparent_60%)] pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -669,8 +669,8 @@ export const LandingPage: React.FC = () => {
         className="relative py-28 px-4 sm:px-6 lg:px-8 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&w=2000&q=85')" }}
       >
-        {/* Capa semitransparente visible sin blur destructivo */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/75" />
+        {/* Capa semitransparente visible oscurecida para máxima legibilidad */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/60 to-black/85" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(226,251,58,0.08)_0%,transparent_70%)]" />
         <div className="relative z-10 max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -887,9 +887,9 @@ export const LandingPage: React.FC = () => {
         className="relative py-28 px-4 sm:px-6 lg:px-8 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=2000&q=85')" }}
       >
-        {/* Viñeta lateral: oscuro a la izquierda para texto, gimnasio muy visible a la derecha */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/80" />
+        {/* Viñeta lateral y vertical oscurecida para máxima legibilidad de credenciales */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/90" />
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -973,7 +973,7 @@ export const LandingPage: React.FC = () => {
         className="relative py-28 px-4 sm:px-6 lg:px-8 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=2000&q=85')" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-[#09090b]/75 via-black/40 to-[#09090b]/75" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#09090b]/85 via-black/65 to-[#09090b]/85" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(226,251,58,0.06)_0%,transparent_60%)]" />
         <div className="relative z-10 max-w-5xl mx-auto">
           <div className="text-center mb-16 relative">
@@ -1070,8 +1070,8 @@ export const LandingPage: React.FC = () => {
         className="relative pt-28 pb-36 sm:pb-40 px-4 sm:px-6 lg:px-10 xl:px-14 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=2000&q=85')" }}
       >
-        {/* Viñeta luminosa con halo de energía lime y fondo de gimnasio visible */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/75" />
+        {/* Viñeta luminosa oscurecida para máxima legibilidad de preguntas y respuestas */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/85" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(226,251,58,0.14)_0%,transparent_65%)]" />
 
         <div className="relative z-10 w-full max-w-[1720px] 2xl:max-w-[1850px] mx-auto">
