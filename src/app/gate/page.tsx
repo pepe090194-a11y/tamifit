@@ -26,7 +26,7 @@ export default function GatePage() {
 
       if (res.ok && data.success) {
         // Redirigir o recargar para entrar a la web
-        window.location.href = '/';
+        window.location.reload();
       } else {
         setError(data.error || 'Credenciales incorrectas');
         setLoading(false);

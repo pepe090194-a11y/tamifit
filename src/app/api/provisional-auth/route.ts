@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       response.cookies.set('tamifit_admin_access', 'alm2026_granted', {
         path: '/',
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: false, // Compatible con HTTP y HTTPS durante la propagación de DNS
         sameSite: 'lax',
         maxAge: 60 * 60 * 24 * 30, // 30 días
       });
