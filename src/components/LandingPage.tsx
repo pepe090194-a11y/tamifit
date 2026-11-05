@@ -1067,7 +1067,7 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================= */}
       <section
         id="faq"
-        className="relative py-28 px-4 sm:px-6 lg:px-10 xl:px-14 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
+        className="relative pt-28 pb-36 sm:pb-40 px-4 sm:px-6 lg:px-10 xl:px-14 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=2000&q=85')" }}
       >
         {/* Viñeta luminosa con halo de energía lime y fondo de gimnasio visible */}
@@ -1184,30 +1184,69 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* ========================================================= */}
-      {/* FOOTER                                                    */}
+      {/* FOOTER FIJO COMPACTO Y ELEGANTE (SIEMPRE VISIBLE)         */}
       {/* ========================================================= */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-black border-t border-zinc-900">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <img
-              src="/tamifit-logo.png"
-              alt="Tamifit Logo"
-              className="w-8 h-8 object-contain"
-            />
-            <span className="font-black tracking-widest text-white text-base">TAMIFIT</span>
-            <span className="text-zinc-600 text-xs font-mono ml-2">© 2026</span>
+      <footer className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/[0.08] bg-[#0A0A0C]/90 backdrop-blur-xl shadow-[0_-8px_30px_rgba(0,0,0,0.6)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5 pb-[max(0.5rem,env(safe-area-inset-bottom,0.5rem))] flex items-center justify-between gap-3 sm:gap-4">
+          
+          {/* Logo y Marca */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <a
+              href="#hero"
+              onClick={(e) => handleNavClick(e, '#hero')}
+              className="flex items-center gap-2 group transition-opacity hover:opacity-90"
+            >
+              <img
+                src="/tamifit-logo.png"
+                alt="Tamifit Logo"
+                className="h-5 sm:h-6 w-auto object-contain transition-transform group-hover:scale-105"
+              />
+              <span className="font-black tracking-widest text-white text-xs sm:text-sm">TAMIFIT</span>
+            </a>
+            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-white/[0.04] border border-white/10 text-zinc-400">
+              © 2026
+            </span>
           </div>
 
-          <div className="flex items-center gap-6 text-xs text-zinc-400">
-            <a href="#hero" onClick={(e) => handleNavClick(e, '#hero')} className="hover:text-white transition-colors">Inicio</a>
-            <a href="#app-showcase" onClick={(e) => handleNavClick(e, '#app-showcase')} className="hover:text-white transition-colors">La App</a>
-            <a href="#diagnostico" onClick={(e) => handleNavClick(e, '#diagnostico')} className="hover:text-white transition-colors">Diagnóstico</a>
-            <a href="#metodo" onClick={(e) => handleNavClick(e, '#metodo')} className="hover:text-white transition-colors">Método 1a1</a>
-            <a href="#entrenadora" onClick={(e) => handleNavClick(e, '#entrenadora')} className="hover:text-white transition-colors">Tamara</a>
-            <a href="#faq" onClick={(e) => handleNavClick(e, '#faq')} className="hover:text-white transition-colors">FAQ</a>
-            <Link href="/app" className="hover:text-[#E2FB3A] transition-colors">Acceso Clientes</Link>
-          </div>
+          {/* Enlaces de navegación rápida en Desktop/Tablet */}
+          <nav className="hidden md:flex items-center justify-center gap-4 lg:gap-6 flex-1 min-w-0 mx-2 text-[11px] font-bold uppercase tracking-wider text-zinc-400">
+            {[
+              { href: '#hero', label: 'Inicio' },
+              { href: '#app-showcase', label: 'La App' },
+              { href: '#diagnostico', label: 'Diagnóstico' },
+              { href: '#metodo', label: 'Método 1a1' },
+              { href: '#entrenadora', label: 'Tamara' },
+              { href: '#faq', label: 'Preguntas' }
+            ].map(item => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="hover:text-white transition-colors hover:text-[#E2FB3A]"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
+          {/* Acciones directas a la derecha */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <a
+              href={appPortalUrl}
+              className="inline-flex items-center justify-center whitespace-nowrap px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-white/15 bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider transition-all"
+            >
+              Área Alumnos
+            </a>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg bg-[#E2FB3A] hover:bg-[#d4ed28] text-black font-black text-[10px] sm:text-[11px] uppercase tracking-wider shadow-[0_0_15px_rgba(226,251,58,0.25)] transition-all transform hover:scale-[1.02] active:scale-95 gap-1.5"
+            >
+              <MessageCircle className="w-3.5 h-3.5 fill-current" />
+              <span>Contactar</span>
+            </a>
+          </div>
 
         </div>
       </footer>
@@ -1220,9 +1259,9 @@ export const LandingPage: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"
-        className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom,1.25rem))] right-4 sm:right-6 z-50 p-3.5 sm:p-4 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 transition-transform active:scale-95 flex items-center justify-center group"
+        className="fixed bottom-[calc(3.25rem+env(safe-area-inset-bottom,0px))] sm:bottom-[calc(3.75rem+env(safe-area-inset-bottom,0px))] right-4 sm:right-6 z-50 p-3 sm:p-3.5 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 transition-transform active:scale-95 flex items-center justify-center group"
       >
-        <MessageCircle className="w-6 h-6 fill-current" />
+        <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
         <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-bold pl-0 group-hover:pl-2 text-black">
           ¿Hablamos?
         </span>
