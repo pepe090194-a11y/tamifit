@@ -36,7 +36,9 @@ export function verifySessionToken(token: string): SessionPayload | null {
       .update(`${headerB64}.${payloadB64}`)
       .digest('base64url');
 
-    if (signature !== expectedSignature) {
+    const sigBuf = Buffer.from(signature);
+    const expBuf = Buffer.from(expectedSignature);
+    if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) {
       return null;
     }
 

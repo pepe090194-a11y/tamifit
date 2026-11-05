@@ -6,6 +6,34 @@ import { Download, ExternalLink } from 'lucide-react';
 export const InstallPwaBanner: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  const promptRef = React.useRef<any>(null);
+
+  useEffect(() => {
+    promptRef.current = deferredPrompt;
+  }, [deferredPrompt]);
+
+  const executeInstallOrOpen = async () => {
+    const promptEvent = promptRef.current;
+    // Si la app aún no está instalada y el navegador tiene el prompt listo, lanza la instalación directa automáticamente
+    if (promptEvent) {
+      try {
+        promptEvent.prompt();
+        const choice = await promptEvent.userChoice;
+        if (choice && choice.outcome === 'accepted') {
+          setIsInstalled(true);
+          localStorage.setItem('tamifit_app_installed', 'true');
+        }
+        promptRef.current = null;
+        setDeferredPrompt(null);
+        return;
+      } catch (err) {
+        console.error('Error al lanzar instalación directa:', err);
+      }
+    }
+
+    // Si ya está instalada o le vuelve a dar, abre la aplicación instalada directamente
+    window.location.href = '/app';
+  };
 
   useEffect(() => {
     // 1. Detectar si ya está corriendo en modo standalone (dentro de la app instalada)
@@ -26,6 +54,7 @@ export const InstallPwaBanner: React.FC = () => {
     // 3. Capturar el evento de instalación nativo automático
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
+      promptRef.current = e;
       setDeferredPrompt(e);
       setIsInstalled(false);
     };
@@ -36,6 +65,7 @@ export const InstallPwaBanner: React.FC = () => {
     const handleAppInstalled = () => {
       setIsInstalled(true);
       localStorage.setItem('tamifit_app_installed', 'true');
+      promptRef.current = null;
       setDeferredPrompt(null);
     };
 
@@ -43,7 +73,7 @@ export const InstallPwaBanner: React.FC = () => {
 
     // 5. Escuchar evento global si se pulsa desde otro botón de la app
     const handleTrigger = () => {
-      handleAction();
+      executeInstallOrOpen();
     };
     window.addEventListener('tamifit-open-install', handleTrigger);
 
@@ -52,28 +82,7 @@ export const InstallPwaBanner: React.FC = () => {
       window.removeEventListener('appinstalled', handleAppInstalled);
       window.removeEventListener('tamifit-open-install', handleTrigger);
     };
-  }, [deferredPrompt, isInstalled]);
-
-  const handleAction = async () => {
-    // Si la app aún no está instalada y el navegador tiene el prompt listo, lanza la instalación directa automáticamente
-    if (deferredPrompt) {
-      try {
-        deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
-        if (choice && choice.outcome === 'accepted') {
-          setIsInstalled(true);
-          localStorage.setItem('tamifit_app_installed', 'true');
-        }
-        setDeferredPrompt(null);
-        return;
-      } catch (err) {
-        console.error('Error al lanzar instalación directa:', err);
-      }
-    }
-
-    // Si ya está instalada o le vuelve a dar, abre la aplicación instalada directamente
-    window.location.href = '/app';
-  };
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[100] bg-[#10141E]/95 backdrop-blur-xl border-b border-[#E2FB3A]/30 px-3 sm:px-4 py-2.5 text-white shadow-2xl shadow-black/80">
@@ -102,7 +111,7 @@ export const InstallPwaBanner: React.FC = () => {
         {/* Botón de acción: si es la 1ª vez la instala automáticamente; si ya está instalada, la abre */}
         <button
           type="button"
-          onClick={handleAction}
+          onClick={executeInstallOrOpen}
           className="bg-[#E2FB3A] hover:bg-[#d4ed28] text-black font-black text-[11px] sm:text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-lg shadow-[#E2FB3A]/20 transition-all active:scale-95 cursor-pointer shrink-0"
         >
           {isInstalled && !deferredPrompt ? (
