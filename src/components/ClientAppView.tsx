@@ -33,7 +33,8 @@ import {
   PlayCircle,
   ExternalLink,
   Save,
-  CheckCircle2
+  CheckCircle2,
+  Smartphone
 } from 'lucide-react';
 import { WorkoutPlan, WorkoutExercise, ExerciseSet, Client, Exercise, ChatMessage, WeeklyFeedback, ClientDailyLog, ClientExerciseLog } from '@/types';
 import { VideoPlayer } from '@/components/VideoPlayer';
@@ -367,6 +368,20 @@ export const ClientAppView: React.FC<ClientAppViewProps> = ({
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('tamifit-open-install'));
+                  }
+                }}
+                title="Instalar App en la pantalla de inicio"
+                className="px-2.5 py-1.5 text-xs text-[#E2FB3A] hover:bg-[#E2FB3A]/15 rounded-lg bg-[#181D26] border border-[#E2FB3A]/40 flex items-center gap-1.5 cursor-pointer transition-colors min-h-[36px]"
+              >
+                <Smartphone className="w-3.5 h-3.5 text-[#E2FB3A]" />
+                <span className="text-[10px] font-bold">Instalar</span>
+              </button>
+
               {client && onStudentLogout && (
                 <button
                   type="button"

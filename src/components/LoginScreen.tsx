@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Lock, User, Eye, EyeOff, ArrowRight, ShieldCheck, Dumbbell, ShieldAlert } from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ArrowRight, ShieldCheck, Dumbbell, ShieldAlert, Smartphone, Download } from 'lucide-react';
 
 interface LoginScreenProps {
   onLogin: (username: string, pass: string) => Promise<{ success: boolean; error?: string } | boolean>;
@@ -239,9 +239,22 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
             </button>
           </form>
 
-          {/* Footer note */}
-          <div className="pt-2 border-t border-[#1F2636] text-center space-y-0.5 text-[10px] sm:text-[11px] text-gray-400">
-            <p className="flex items-center justify-center gap-1.5 text-gray-400 font-medium">
+          {/* Botón directo de instalación PWA & Footer note */}
+          <div className="pt-2.5 border-t border-[#1F2636] text-center space-y-2">
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.dispatchEvent(new CustomEvent('tamifit-open-install'));
+                }
+              }}
+              className="inline-flex items-center justify-center gap-2 text-xs font-bold text-[#E2FB3A] hover:text-[#d4ed28] bg-[#E2FB3A]/10 border border-[#E2FB3A]/30 py-2 px-3 rounded-xl w-full transition-all active:scale-95 cursor-pointer"
+            >
+              <Smartphone className="w-3.5 h-3.5 text-[#E2FB3A]" />
+              <span>Instalar App en el móvil</span>
+            </button>
+
+            <p className="flex items-center justify-center gap-1.5 text-gray-400 font-medium text-[10px] sm:text-[11px]">
               <ShieldCheck className="w-3.5 h-3.5 text-[#E2FB3A]" />
               {mode === 'trainer' ? 'Área protegida por cifrado HMAC' : 'Acceso seguro a tus rutinas y entrenos'}
             </p>
