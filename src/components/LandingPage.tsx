@@ -46,9 +46,12 @@ import {
 } from 'lucide-react';
 
 const SectionDivider: React.FC = () => (
-  <div className="relative w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent my-0 overflow-visible z-20">
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-[1px] bg-gradient-to-r from-transparent via-[#E2FB3A]/60 to-transparent" />
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#06080C] border-2 border-[#E2FB3A] shadow-[0_0_12px_#E2FB3A]" />
+  <div className="relative w-full h-12 sm:h-16 -my-6 sm:-my-8 z-20 pointer-events-none flex items-center justify-center overflow-hidden">
+    {/* Halo ambiental difuminado que une las secciones suavemente */}
+    <div className="w-80 sm:w-[480px] h-8 bg-[#E2FB3A]/[0.05] blur-2xl rounded-full" />
+    {/* Línea de luz ultra suave sin corte brusco */}
+    <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+    <div className="absolute w-48 sm:w-72 h-[1px] bg-gradient-to-r from-transparent via-[#E2FB3A]/20 to-transparent" />
   </div>
 );
 
@@ -240,6 +243,9 @@ export const LandingPage: React.FC = () => {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(226,251,58,0.12)_0%,transparent_70%)]" />
         </div>
 
+        {/* Fusión suave en degradado inferior hacia la siguiente sección */}
+        <div className="absolute inset-x-0 bottom-0 h-36 sm:h-52 bg-gradient-to-t from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
+
         <div className="relative z-10 max-w-5xl mx-auto space-y-6 sm:space-y-8">
           
 
@@ -316,6 +322,10 @@ export const LandingPage: React.FC = () => {
         {/* Degradado semitransparente deportivo con halo lime */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#06080C]/70 via-[#06080C]/35 to-[#06080C]/80" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(226,251,58,0.10)_0%,transparent_60%)] pointer-events-none" />
+
+        {/* Fusión suave en degradado superior e inferior */}
+        <div className="absolute inset-x-0 top-0 h-36 sm:h-52 bg-gradient-to-b from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-36 sm:h-52 bg-gradient-to-t from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -666,12 +676,16 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================= */}
       <section
         id="diagnostico"
-        className="relative py-28 px-4 sm:px-6 lg:px-8 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
+        className="relative py-28 px-4 sm:px-6 lg:px-8 bg-fixed bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&w=2000&q=85')" }}
       >
         {/* Capa semitransparente visible sin blur destructivo */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/75" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(226,251,58,0.08)_0%,transparent_70%)]" />
+
+        {/* Fusión suave en degradado superior e inferior */}
+        <div className="absolute inset-x-0 top-0 h-36 sm:h-52 bg-gradient-to-b from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-36 sm:h-52 bg-gradient-to-t from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
         <div className="relative z-10 max-w-4xl mx-auto">
           <div className="text-center mb-12">
 
@@ -884,12 +898,16 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================= */}
       <section
         id="entrenadora"
-        className="relative py-28 px-4 sm:px-6 lg:px-8 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
+        className="relative py-28 px-4 sm:px-6 lg:px-8 bg-fixed bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=2000&q=85')" }}
       >
         {/* Viñeta lateral: oscuro a la izquierda para texto, gimnasio muy visible a la derecha */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/80" />
+
+        {/* Fusión suave en degradado superior e inferior */}
+        <div className="absolute inset-x-0 top-0 h-36 sm:h-52 bg-gradient-to-b from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-36 sm:h-52 bg-gradient-to-t from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -970,11 +988,15 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================= */}
       <section
         id="metodo"
-        className="relative py-28 px-4 sm:px-6 lg:px-8 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
+        className="relative py-28 px-4 sm:px-6 lg:px-8 bg-fixed bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=2000&q=85')" }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[#09090b]/75 via-black/40 to-[#09090b]/75" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(226,251,58,0.06)_0%,transparent_60%)]" />
+
+        {/* Fusión suave en degradado superior e inferior */}
+        <div className="absolute inset-x-0 top-0 h-36 sm:h-52 bg-gradient-to-b from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-36 sm:h-52 bg-gradient-to-t from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
         <div className="relative z-10 max-w-5xl mx-auto">
           <div className="text-center mb-16 relative">
             {/* Halo de luz de fondo para que el título destaque al máximo */}
@@ -1067,12 +1089,16 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================= */}
       <section
         id="faq"
-        className="relative pt-28 pb-36 sm:pb-40 px-4 sm:px-6 lg:px-10 xl:px-14 border-b border-zinc-800/80 bg-fixed bg-cover bg-center overflow-hidden"
+        className="relative pt-28 pb-36 sm:pb-40 px-4 sm:px-6 lg:px-10 xl:px-14 bg-fixed bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=2000&q=85')" }}
       >
         {/* Viñeta luminosa con halo de energía lime y fondo de gimnasio visible */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/75" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(226,251,58,0.14)_0%,transparent_65%)]" />
+
+        {/* Fusión suave en degradado superior e inferior */}
+        <div className="absolute inset-x-0 top-0 h-36 sm:h-52 bg-gradient-to-b from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-36 sm:h-52 bg-gradient-to-t from-[#06080C] via-[#06080C]/75 to-transparent z-[2] pointer-events-none" />
 
         <div className="relative z-10 w-full max-w-[1720px] 2xl:max-w-[1850px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-start">
