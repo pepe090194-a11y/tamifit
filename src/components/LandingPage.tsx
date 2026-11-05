@@ -1184,31 +1184,34 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* ========================================================= */}
-      {/* FOOTER FIJO COMPACTO (SIEMPRE VISIBLE)                    */}
+      {/* FOOTER FIJO COMPACTO CENTRADO (SIEMPRE VISIBLE)           */}
       {/* ========================================================= */}
       <footer className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/[0.08] bg-[#0A0A0C]/90 backdrop-blur-xl shadow-[0_-8px_30px_rgba(0,0,0,0.6)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 pb-[max(0.6rem,env(safe-area-inset-bottom,0.6rem))] flex items-center justify-between gap-3 text-xs text-zinc-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 pb-[max(0.6rem,env(safe-area-inset-bottom,0.6rem))] flex items-center justify-center flex-wrap gap-x-2.5 sm:gap-x-3 gap-y-1 text-center text-[11px] sm:text-xs text-zinc-400">
           
-          {/* Logo y Copyright */}
-          <div className="flex items-center gap-2.5 shrink-0">
-            <a
-              href="#hero"
-              onClick={(e) => handleNavClick(e, '#hero')}
-              className="inline-flex items-center group transition-opacity hover:opacity-80"
-              aria-label="Ir al inicio"
-            >
-              <img
-                src="/tamifit-logo.png"
-                alt="Tamifit Logo"
-                className="h-5 sm:h-6 w-auto object-contain transition-transform group-hover:scale-105"
-              />
-            </a>
-            <span className="font-mono text-[11px] text-zinc-500">© 2026</span>
-          </div>
+          {/* Logo */}
+          <a
+            href="#hero"
+            onClick={(e) => handleNavClick(e, '#hero')}
+            className="inline-flex items-center group transition-opacity hover:opacity-80 shrink-0"
+            aria-label="Ir al inicio"
+          >
+            <img
+              src="/tamifit-logo.png"
+              alt="Tamifit Logo"
+              className="h-4 sm:h-5 w-auto object-contain transition-transform group-hover:scale-105"
+            />
+          </a>
+
+          {/* Copyright */}
+          <span className="font-mono text-[11px] text-zinc-500 shrink-0">© 2026</span>
+
+          {/* Separador */}
+          <span className="text-zinc-600 shrink-0">·</span>
 
           {/* Créditos de autor */}
-          <div className="text-[11px] sm:text-xs text-zinc-400 text-right shrink-0">
-            <span>Ecosistema creado por </span>
+          <span className="shrink-0">
+            Ecosistema creado por{' '}
             <a
               href="https://pepepozueco.es"
               target="_blank"
@@ -1217,7 +1220,7 @@ export const LandingPage: React.FC = () => {
             >
               Pepe Pozueco
             </a>
-          </div>
+          </span>
 
         </div>
       </footer>
