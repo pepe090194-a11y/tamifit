@@ -83,7 +83,18 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 7. Default domain (tamifit.com or localhost:3000):
+  // 7. En el dominio principal (tamifit.com): redirigir /app hacia app.tamifit.com y /admin hacia admin.tamifit.com
+  const isProductionDomain = hostname.includes('tamifit.com') || hostname.includes('tamifit.es');
+  if (isProductionDomain && !isAppSubdomain && !isAdminSubdomain) {
+    if (url.pathname === '/app' || url.pathname.startsWith('/app/')) {
+      return NextResponse.redirect(new URL('https://app.tamifit.com', request.url), 307);
+    }
+    if (url.pathname === '/admin' || url.pathname.startsWith('/admin/')) {
+      return NextResponse.redirect(new URL('https://admin.tamifit.com', request.url), 307);
+    }
+  }
+
+  // 8. Default domain (tamifit.com landing o localhost:3000):
   return NextResponse.next();
 }
 

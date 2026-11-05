@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -80,6 +80,10 @@ export const LandingPage: React.FC = () => {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     '¡Hola Tamara! He visto tu web y me gustaría información para empezar mi asesoramiento personalizado contigo.'
   )}`;
+
+  const appPortalUrl = typeof window !== 'undefined' && !window.location.hostname.includes('tamifit.com')
+    ? '/app'
+    : 'https://app.tamifit.com';
 
   // Desplazamiento suave para los enlaces de ancla
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -171,12 +175,12 @@ export const LandingPage: React.FC = () => {
 
           {/* A LA DERECHA DEL TODO DEL HEADER: BOTONES DE ÁREA ALUMNOS Y EMPIEZA YA SEPARADOS */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0 ml-auto z-10">
-            <Link
-              href="/app"
+            <a
+              href={appPortalUrl}
               className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-4 py-2.5 rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white font-bold text-xs uppercase tracking-wider transition-all shrink-0"
             >
               Área Alumnos
-            </Link>
+            </a>
             <a
               href={whatsappUrl}
               target="_blank"
@@ -224,13 +228,13 @@ export const LandingPage: React.FC = () => {
             ))}
             
             <div className="pt-2 border-t border-white/10 flex flex-col gap-2">
-              <Link
-                href="/app"
+              <a
+                href={appPortalUrl}
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full text-center py-2.5 rounded-xl border border-white/10 bg-white/5 text-white text-xs font-bold uppercase tracking-wider"
               >
                 Área Alumnos
-              </Link>
+              </a>
             </div>
           </div>
         )}
