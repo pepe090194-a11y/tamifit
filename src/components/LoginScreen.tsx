@@ -93,7 +93,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
     }
 
     if (!p) {
-      setErrorMessage('Por favor, introduce tu contraseÒa.');
+      setErrorMessage('Por favor, introduce tu contrase√±a.');
       return;
     }
 
@@ -103,27 +103,27 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
       const res = await onLogin(u, p);
       if (typeof res === 'object') {
         if (!res.success) {
-          setErrorMessage(res.error || 'Usuario o contraseÒa incorrectos.');
+          setErrorMessage(res.error || 'Usuario o contrase√±a incorrectos.');
           setIsLoading(false);
         }
       } else if (!res) {
-        setErrorMessage('Usuario o contraseÒa incorrectos. Revisa tus datos e intÈntalo de nuevo.');
+        setErrorMessage('Usuario o contrase√±a incorrectos. Revisa tus datos e int√©ntalo de nuevo.');
         setIsLoading(false);
       }
     } catch (err) {
-      setErrorMessage('Error de conexiÛn al servidor. IntÈntalo de nuevo.');
+      setErrorMessage('Error de conexi√≥n al servidor. Int√©ntalo de nuevo.');
       setIsLoading(false);
     }
   };
 
   const displayTitle = title || (
     mode === 'trainer' ? 'Panel de Entrenador' :
-    mode === 'client' ? '¡rea Alumnos' :
-    'Iniciar SesiÛn'
+    mode === 'client' ? '√Årea Alumnos' :
+    'Iniciar Sesi√≥n'
   );
 
   const displaySubtitle = subtitle || (
-    mode === 'trainer' ? 'Acceso exclusivo de administraciÛn TamiFit' :
+    mode === 'trainer' ? 'Acceso exclusivo de administraci√≥n TamiFit' :
     mode === 'client' ? 'Tu app personal de entrenamiento y seguimiento' :
     'Acceso al Portal de Entrenamiento & Coaching'
   );
@@ -153,7 +153,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
             
             <div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#1A202C] border border-[#2B3547] text-[10px] font-bold text-[#E2FB3A] uppercase tracking-wider mb-1">
-                {mode === 'trainer' ? 'Acceso Admin' : mode === 'client' ? '¡rea Alumnos' : 'Portal'}
+                {mode === 'trainer' ? 'Acceso Admin' : mode === 'client' ? '√Årea Alumnos' : 'Portal'}
               </div>
               <h2 className="text-base sm:text-lg font-black text-white tracking-tight">
                 {displayTitle}
@@ -194,11 +194,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               </div>
             </div>
 
-            {/* Input: ContraseÒa */}
+            {/* Input: Contrase√±a */}
             <div className="space-y-1">
               <div className="flex items-center justify-between">
                 <label className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-gray-300 block">
-                  {mode === 'client' ? 'CÛdigo de Acceso / Clave' : 'ContraseÒa'}
+                  {mode === 'client' ? 'C√≥digo de Acceso / Clave' : 'Contrase√±a'}
                 </label>
               </div>
               <div className="relative">
@@ -208,14 +208,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder={mode === 'client' ? 'Ej: TAMI-8978 o 1234' : 'ïïïïïïïï'}
+                  placeholder={mode === 'client' ? 'Ej: TAMI-8978 o 1234' : '¬ï¬ï¬ï¬ï¬ï¬ï¬ï¬ï'}
                   className="w-full bg-[#181D2A] text-base sm:text-sm text-white placeholder-gray-500 pl-10 pr-11 py-2.5 sm:py-3 rounded-xl border border-[#2A3348] focus:outline-none focus:border-[#E2FB3A] focus:ring-1 focus:ring-[#E2FB3A] transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-1 cursor-pointer"
-                  aria-label={showPassword ? 'Ocultar contraseÒa' : 'Ver contraseÒa'}
+                  aria-label={showPassword ? 'Ocultar contrase√±a' : 'Ver contrase√±a'}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -239,7 +239,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
             </button>
           </form>
 
-          {/* BotÛn directo de instalaciÛn PWA & Footer note */}
+          {/* Bot√≥n directo de instalaci√≥n PWA & Footer note */}
           <div className="pt-2.5 border-t border-[#1F2636] text-center space-y-2">
             <button
               type="button"
@@ -251,19 +251,19 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               className="inline-flex items-center justify-center gap-2 text-xs font-bold text-[#E2FB3A] hover:text-[#d4ed28] bg-[#E2FB3A]/10 border border-[#E2FB3A]/30 py-2 px-3 rounded-xl w-full transition-all active:scale-95 cursor-pointer"
             >
               <Smartphone className="w-3.5 h-3.5 text-[#E2FB3A]" />
-              <span>Instalar / Abrir App en el mÛvil</span>
+              <span>Instalar / Abrir App en el m√≥vil</span>
             </button>
 
             <p className="flex items-center justify-center gap-1.5 text-gray-400 font-medium text-[10px] sm:text-[11px]">
               <ShieldCheck className="w-3.5 h-3.5 text-[#E2FB3A]" />
-              {mode === 'trainer' ? '¡rea protegida por cifrado HMAC' : 'Acceso seguro a tus rutinas y entrenos'}
+              {mode === 'trainer' ? '√Årea protegida por cifrado HMAC' : 'Acceso seguro a tus rutinas y entrenos'}
             </p>
           </div>
         </div>
 
         {/* Small link to other area if needed */}
         <p className="text-center text-[10px] sm:text-[11px] text-gray-500 mt-2 sm:mt-3">
-          TamiFit ï Coaching Deportivo & Rendimiento
+          TamiFit ¬ï Coaching Deportivo & Rendimiento
         </p>
       </div>
     </div>
