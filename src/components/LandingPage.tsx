@@ -117,10 +117,10 @@ export const LandingPage: React.FC = () => {
         {/* Línea láser inferior sutil en el borde del header */}
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#E2FB3A]/30 to-transparent pointer-events-none" />
 
-        <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between relative">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-3">
           
-          {/* Logo visible en móvil a la izquierda (cuando el bloque central de desktop está oculto) */}
-          <div className="xl:hidden flex items-center shrink-0">
+          {/* Logo Principal a la izquierda (visible en todas las resoluciones) */}
+          <div className="flex items-center shrink-0">
             <Link href="/" className="flex items-center shrink-0 group">
               <Image
                 src="/tamifit-logo.png"
@@ -133,51 +133,33 @@ export const LandingPage: React.FC = () => {
             </Link>
           </div>
 
-          {/* CENTRO DE LA PANTALLA: [LOGO + LÍNEA VERTICAL SEPARATORIA + MENÚS] TODO CENTRADO */}
-          <div className="hidden xl:flex items-center gap-4 xl:gap-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
-            {/* Logo Oficial */}
-            <Link href="/" className="flex items-center shrink-0 group">
-              <Image
-                src="/tamifit-logo.png"
-                alt="Tamifit"
-                width={135}
-                height={42}
-                className="h-8 xl:h-9 w-auto object-contain transition-transform group-hover:scale-105"
-                priority
-              />
-            </Link>
+          {/* Menú de Navegación en el centro (Flexbox fluido: NUNCA se solapa con Área Alumnos) */}
+          <nav className="hidden lg:flex items-center justify-center gap-1 xl:gap-2 2xl:gap-3 mx-2 xl:mx-4 flex-1 min-w-0">
+            {[
+              { href: '#app-showcase', label: 'La App' },
+              { href: '#diagnostico', label: 'Diagnóstico' },
+              { href: '#metodo', label: 'Método 1a1' },
+              { href: '#entrenadora', label: 'Tamara' },
+              { href: '#faq', label: 'Preguntas' }
+            ].map(item => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="group relative px-2 xl:px-3 py-1.5 text-xs font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors duration-200 whitespace-nowrap"
+              >
+                <span className="relative z-10">{item.label}</span>
+                <span className="absolute bottom-0 left-2 right-2 h-[2px] bg-[#E2FB3A] shadow-[0_0_12px_#E2FB3A] rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
+                <span className="absolute inset-0 rounded-lg bg-white/0 group-hover:bg-white/[0.03] transition-colors duration-200 pointer-events-none" />
+              </a>
+            ))}
+          </nav>
 
-            {/* Línea vertical separatoria del color del logo (#E2FB3A) */}
-            <div className="h-5 w-[2px] bg-[#E2FB3A] shadow-[0_0_8px_rgba(226,251,58,0.6)] rounded-full shrink-0" />
-
-            {/* Los Menús de Navegación */}
-            <nav className="flex items-center gap-1 xl:gap-2">
-              {[
-                { href: '#app-showcase', label: 'La App' },
-                { href: '#diagnostico', label: 'Diagnóstico' },
-                { href: '#metodo', label: 'Método 1a1' },
-                { href: '#entrenadora', label: 'Tamara' },
-                { href: '#faq', label: 'Preguntas' }
-              ].map(item => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="group relative px-2.5 xl:px-3.5 py-2 text-xs font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors duration-200 whitespace-nowrap"
-                >
-                  <span className="relative z-10">{item.label}</span>
-                  <span className="absolute bottom-0 left-2 right-2 h-[2px] bg-[#E2FB3A] shadow-[0_0_12px_#E2FB3A] rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
-                  <span className="absolute inset-0 rounded-lg bg-white/0 group-hover:bg-white/[0.03] transition-colors duration-200 pointer-events-none" />
-                </a>
-              ))}
-            </nav>
-          </div>
-
-          {/* A LA DERECHA DEL TODO DEL HEADER: BOTONES DE ÁREA ALUMNOS Y EMPIEZA YA SEPARADOS */}
-          <div className="flex items-center gap-2 sm:gap-4 shrink-0 ml-auto z-10">
+          {/* Botones de acción a la derecha */}
+          <div className="flex items-center gap-2 sm:gap-3.5 shrink-0">
             <a
               href={appPortalUrl}
-              className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-4 py-2.5 rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white font-bold text-xs uppercase tracking-wider transition-all shrink-0"
+              className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white font-bold text-xs uppercase tracking-wider transition-all shrink-0"
             >
               Área Alumnos
             </a>
@@ -185,7 +167,7 @@ export const LandingPage: React.FC = () => {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center whitespace-nowrap px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#E2FB3A] hover:bg-[#d4ed28] text-black font-black text-[11px] sm:text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(226,251,58,0.25)] hover:shadow-[0_0_25px_rgba(226,251,58,0.4)] transition-all transform hover:scale-[1.02] active:scale-95 gap-1.5 sm:gap-2 shrink-0"
+              className="inline-flex items-center justify-center whitespace-nowrap px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#E2FB3A] hover:bg-[#d4ed28] text-black font-black text-[11px] sm:text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(226,251,58,0.25)] hover:shadow-[0_0_25px_rgba(226,251,58,0.4)] transition-all transform hover:scale-[1.02] active:scale-95 gap-1.5 sm:gap-2 shrink-0"
             >
               <span>¡Empieza Ya!</span>
               <ChevronRight className="w-4 h-4 stroke-[3]" />
@@ -194,7 +176,7 @@ export const LandingPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-colors shrink-0"
+              className="lg:hidden p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-colors shrink-0"
               aria-label="Abrir menú"
             >
               {mobileMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-zinc-300" />}
@@ -205,7 +187,7 @@ export const LandingPage: React.FC = () => {
 
         {/* Menú Mobile desplegable acorde al nuevo estilo */}
         {mobileMenuOpen && (
-          <div className="xl:hidden bg-[#0A0D15]/95 backdrop-blur-2xl border-b border-white/10 px-4 py-4 space-y-1.5 animate-fadeIn">
+          <div className="lg:hidden bg-[#0A0D15]/95 backdrop-blur-2xl border-b border-white/10 px-4 py-4 space-y-1.5 animate-fadeIn">
             {[
               { href: '#app-showcase', label: 'La App' },
               { href: '#diagnostico', label: 'Diagnóstico' },
