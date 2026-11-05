@@ -1184,67 +1184,38 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* ========================================================= */}
-      {/* FOOTER FIJO COMPACTO Y ELEGANTE (SIEMPRE VISIBLE)         */}
+      {/* FOOTER FIJO COMPACTO (SIEMPRE VISIBLE)                    */}
       {/* ========================================================= */}
       <footer className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/[0.08] bg-[#0A0A0C]/90 backdrop-blur-xl shadow-[0_-8px_30px_rgba(0,0,0,0.6)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5 pb-[max(0.5rem,env(safe-area-inset-bottom,0.5rem))] flex items-center justify-between gap-3 sm:gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 pb-[max(0.6rem,env(safe-area-inset-bottom,0.6rem))] flex items-center justify-between gap-3 text-xs text-zinc-400">
           
-          {/* Logo y Marca */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Logo y Copyright */}
+          <div className="flex items-center gap-2.5 shrink-0">
             <a
               href="#hero"
               onClick={(e) => handleNavClick(e, '#hero')}
-              className="flex items-center gap-2 group transition-opacity hover:opacity-90"
+              className="inline-flex items-center group transition-opacity hover:opacity-80"
+              aria-label="Ir al inicio"
             >
               <img
                 src="/tamifit-logo.png"
                 alt="Tamifit Logo"
                 className="h-5 sm:h-6 w-auto object-contain transition-transform group-hover:scale-105"
               />
-              <span className="font-black tracking-widest text-white text-xs sm:text-sm">TAMIFIT</span>
             </a>
-            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-white/[0.04] border border-white/10 text-zinc-400">
-              © 2026
-            </span>
+            <span className="font-mono text-[11px] text-zinc-500">© 2026</span>
           </div>
 
-          {/* Enlaces de navegación rápida en Desktop/Tablet */}
-          <nav className="hidden md:flex items-center justify-center gap-4 lg:gap-6 flex-1 min-w-0 mx-2 text-[11px] font-bold uppercase tracking-wider text-zinc-400">
-            {[
-              { href: '#hero', label: 'Inicio' },
-              { href: '#app-showcase', label: 'La App' },
-              { href: '#diagnostico', label: 'Diagnóstico' },
-              { href: '#metodo', label: 'Método 1a1' },
-              { href: '#entrenadora', label: 'Tamara' },
-              { href: '#faq', label: 'Preguntas' }
-            ].map(item => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="hover:text-white transition-colors hover:text-[#E2FB3A]"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Acciones directas a la derecha */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Créditos de autor */}
+          <div className="text-[11px] sm:text-xs text-zinc-400 text-right shrink-0">
+            <span>Ecosistema creado por </span>
             <a
-              href={appPortalUrl}
-              className="inline-flex items-center justify-center whitespace-nowrap px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-white/15 bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider transition-all"
-            >
-              Área Alumnos
-            </a>
-            <a
-              href={whatsappUrl}
+              href="https://pepepozueco.es"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg bg-[#E2FB3A] hover:bg-[#d4ed28] text-black font-black text-[10px] sm:text-[11px] uppercase tracking-wider shadow-[0_0_15px_rgba(226,251,58,0.25)] transition-all transform hover:scale-[1.02] active:scale-95 gap-1.5"
+              className="font-semibold text-zinc-200 hover:text-[#E2FB3A] transition-colors underline decoration-zinc-600 hover:decoration-[#E2FB3A] underline-offset-2"
             >
-              <MessageCircle className="w-3.5 h-3.5 fill-current" />
-              <span>Contactar</span>
+              Pepe Pozueco
             </a>
           </div>
 
@@ -1259,7 +1230,7 @@ export const LandingPage: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"
-        className="fixed bottom-[calc(3.25rem+env(safe-area-inset-bottom,0px))] sm:bottom-[calc(3.75rem+env(safe-area-inset-bottom,0px))] right-4 sm:right-6 z-50 p-3 sm:p-3.5 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 transition-transform active:scale-95 flex items-center justify-center group"
+        className="fixed bottom-[calc(3rem+env(safe-area-inset-bottom,0px))] sm:bottom-[calc(3.5rem+env(safe-area-inset-bottom,0px))] right-4 sm:right-6 z-50 p-3 sm:p-3.5 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 transition-transform active:scale-95 flex items-center justify-center group"
       >
         <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
         <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-bold pl-0 group-hover:pl-2 text-black">
