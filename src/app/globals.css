@@ -27,8 +27,10 @@ body {
   overscroll-behavior-y: none;
 }
 
-/* Prevent unwanted pull-to-refresh & horizontal overflow on mobile devices */
+/* Transición suave al navegar por anclas y holgura para el header fijo */
 html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
   overscroll-behavior-y: none;
   -webkit-text-size-adjust: 100%;
 }

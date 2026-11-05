@@ -1,14 +1,22 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Lock, User, Eye, EyeOff, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ArrowRight, ShieldCheck, Dumbbell, ShieldAlert } from 'lucide-react';
 
 interface LoginScreenProps {
   onLogin: (username: string, pass: string) => Promise<{ success: boolean; error?: string } | boolean>;
+  mode?: 'all' | 'trainer' | 'client';
+  title?: string;
+  subtitle?: string;
 }
 
-export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
+export const LoginScreen: React.FC<LoginScreenProps> = ({
+  onLogin,
+  mode = 'all',
+  title,
+  subtitle
+}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -108,6 +116,18 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
     }
   };
 
+  const displayTitle = title || (
+    mode === 'trainer' ? 'Panel de Entrenador' :
+    mode === 'client' ? 'Área Alumnos' :
+    'Iniciar Sesión'
+  );
+
+  const displaySubtitle = subtitle || (
+    mode === 'trainer' ? 'Acceso exclusivo de administración TamiFit' :
+    mode === 'client' ? 'Tu app personal de entrenamiento y seguimiento' :
+    'Acceso al Portal de Entrenamiento & Coaching'
+  );
+
   return (
     <div className="login-container fixed inset-0 w-full h-[100dvh] max-h-[100dvh] bg-[#07090C] text-[#F3F4F6] flex flex-col items-center justify-center p-3 sm:p-6 select-none touch-none overscroll-none overflow-hidden">
       {/* Ambient background glow */}
@@ -132,11 +152,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             </div>
             
             <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#1A202C] border border-[#2B3547] text-[10px] font-bold text-[#E2FB3A] uppercase tracking-wider mb-1">
+                {mode === 'trainer' ? 'Acceso Admin' : mode === 'client' ? 'Área Alumnos' : 'Portal'}
+              </div>
               <h2 className="text-base sm:text-lg font-black text-white tracking-tight">
-                Iniciar Sesión
+                {displayTitle}
               </h2>
               <p className="text-[11px] sm:text-xs text-gray-400 mt-0.5">
-                Acceso al Portal de Entrenamiento & Coaching
+                {displaySubtitle}
               </p>
             </div>
           </div>
@@ -149,24 +172,24 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             </div>
           )}
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-3.5">
+          {/* Login Form */}
+          <form onSubmit={handleSubmit} className="space-y-3">
             {/* Input: Usuario */}
             <div className="space-y-1">
               <label className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-gray-300 block">
-                Usuario
+                {mode === 'trainer' ? 'Usuario Entrenador' : 'Usuario o Email'}
               </label>
               <div className="relative">
                 <User className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
+                  required
                   autoCapitalize="none"
                   autoCorrect="off"
-                  required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Tu usuario"
-                  className="w-full bg-[#181D2A] text-base sm:text-sm text-white placeholder-gray-500 pl-10 pr-3 py-2.5 sm:py-3 rounded-xl border border-[#2A3348] focus:outline-none focus:border-[#E2FB3A] focus:ring-1 focus:ring-[#E2FB3A] transition-all"
+                  placeholder={mode === 'trainer' ? 'tamifit' : 'Tu usuario o email'}
+                  className="w-full bg-[#181D2A] text-base sm:text-sm text-white placeholder-gray-500 pl-10 pr-4 py-2.5 sm:py-3 rounded-xl border border-[#2A3348] focus:outline-none focus:border-[#E2FB3A] focus:ring-1 focus:ring-[#E2FB3A] transition-all"
                 />
               </div>
             </div>
@@ -175,7 +198,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             <div className="space-y-1">
               <div className="flex items-center justify-between">
                 <label className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-gray-300 block">
-                  Contraseña / Clave
+                  {mode === 'client' ? 'Código de Acceso / Clave' : 'Contraseña'}
                 </label>
               </div>
               <div className="relative">
@@ -185,7 +208,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder={mode === 'client' ? 'Ej: TAMI-8978 o 1234' : '••••••••'}
                   className="w-full bg-[#181D2A] text-base sm:text-sm text-white placeholder-gray-500 pl-10 pr-11 py-2.5 sm:py-3 rounded-xl border border-[#2A3348] focus:outline-none focus:border-[#E2FB3A] focus:ring-1 focus:ring-[#E2FB3A] transition-all"
                 />
                 <button
@@ -209,7 +232,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                 <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
               ) : (
                 <>
-                  <span>Entrar a TamiFit</span>
+                  <span>{mode === 'trainer' ? 'Acceder al Panel' : 'Entrar a mi App'}</span>
                   <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                 </>
               )}
@@ -220,12 +243,12 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           <div className="pt-2 border-t border-[#1F2636] text-center space-y-0.5 text-[10px] sm:text-[11px] text-gray-400">
             <p className="flex items-center justify-center gap-1.5 text-gray-400 font-medium">
               <ShieldCheck className="w-3.5 h-3.5 text-[#E2FB3A]" />
-              Acceso seguro para entrenadores y alumnos
+              {mode === 'trainer' ? 'Área protegida por cifrado HMAC' : 'Acceso seguro a tus rutinas y entrenos'}
             </p>
           </div>
         </div>
 
-        {/* Small copyright below */}
+        {/* Small link to other area if needed */}
         <p className="text-center text-[10px] sm:text-[11px] text-gray-500 mt-2 sm:mt-3">
           TamiFit • Coaching Deportivo & Rendimiento
         </p>
