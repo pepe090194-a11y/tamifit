@@ -90,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Center/Right Actions */}
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         {/* Global Search Bar */}
-        <div className="relative w-28 xs:w-36 sm:w-44 md:w-52 lg:w-60">
+        <div className="relative hidden min-[400px]:block w-28 sm:w-44 md:w-52 lg:w-60">
           <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
@@ -110,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span className="hidden sm:inline">Nuevo Alumno</span>
-            <span className="sm:hidden">Nuevo</span>
+            <span className="hidden min-[380px]:inline sm:hidden">Nuevo</span>
           </button>
         ) : (
           <button
@@ -120,7 +120,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span className="hidden sm:inline">Crear Rutina</span>
-            <span className="sm:hidden">Rutina</span>
+            <span className="hidden min-[380px]:inline sm:hidden">Rutina</span>
           </button>
         )}
 

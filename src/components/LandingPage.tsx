@@ -113,24 +113,24 @@ export const LandingPage: React.FC = () => {
         {/* Línea láser inferior sutil en el borde del header */}
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#E2FB3A]/30 to-transparent pointer-events-none" />
 
-        <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 h-20 flex items-center justify-between relative">
+        <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between relative">
           
           {/* Logo visible en móvil a la izquierda (cuando el bloque central de desktop está oculto) */}
-          <div className="lg:hidden flex items-center shrink-0">
+          <div className="xl:hidden flex items-center shrink-0">
             <Link href="/" className="flex items-center shrink-0 group">
               <Image
                 src="/tamifit-logo.png"
                 alt="Tamifit"
                 width={130}
                 height={40}
-                className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
+                className="h-7 sm:h-8 w-auto object-contain transition-transform group-hover:scale-105"
                 priority
               />
             </Link>
           </div>
 
           {/* CENTRO DE LA PANTALLA: [LOGO + LÍNEA VERTICAL SEPARATORIA + MENÚS] TODO CENTRADO */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
+          <div className="hidden xl:flex items-center gap-4 xl:gap-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
             {/* Logo Oficial */}
             <Link href="/" className="flex items-center shrink-0 group">
               <Image
@@ -170,7 +170,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* A LA DERECHA DEL TODO DEL HEADER: BOTONES DE ÁREA ALUMNOS Y EMPIEZA YA SEPARADOS */}
-          <div className="flex items-center gap-4 sm:gap-6 shrink-0 ml-auto z-10">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0 ml-auto z-10">
             <Link
               href="/app"
               className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-4 py-2.5 rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white font-bold text-xs uppercase tracking-wider transition-all shrink-0"
@@ -181,7 +181,7 @@ export const LandingPage: React.FC = () => {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center whitespace-nowrap px-5 sm:px-6 py-2.5 rounded-xl bg-[#E2FB3A] hover:bg-[#d4ed28] text-black font-black text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(226,251,58,0.25)] hover:shadow-[0_0_25px_rgba(226,251,58,0.4)] transition-all transform hover:scale-[1.02] active:scale-95 gap-2 shrink-0"
+              className="inline-flex items-center justify-center whitespace-nowrap px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#E2FB3A] hover:bg-[#d4ed28] text-black font-black text-[11px] sm:text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(226,251,58,0.25)] hover:shadow-[0_0_25px_rgba(226,251,58,0.4)] transition-all transform hover:scale-[1.02] active:scale-95 gap-1.5 sm:gap-2 shrink-0"
             >
               <span>¡Empieza Ya!</span>
               <ChevronRight className="w-4 h-4 stroke-[3]" />
@@ -190,7 +190,7 @@ export const LandingPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-colors shrink-0"
+              className="xl:hidden p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-colors shrink-0"
               aria-label="Abrir menú"
             >
               {mobileMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-zinc-300" />}
@@ -201,7 +201,7 @@ export const LandingPage: React.FC = () => {
 
         {/* Menú Mobile desplegable acorde al nuevo estilo */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#0A0D15]/95 backdrop-blur-2xl border-b border-white/10 px-4 py-4 space-y-1.5 animate-fadeIn">
+          <div className="xl:hidden bg-[#0A0D15]/95 backdrop-blur-2xl border-b border-white/10 px-4 py-4 space-y-1.5 animate-fadeIn">
             {[
               { href: '#app-showcase', label: 'La App' },
               { href: '#diagnostico', label: 'Diagnóstico' },
@@ -497,7 +497,7 @@ export const LandingPage: React.FC = () => {
             <div className="lg:col-span-5 flex justify-center">
               
               {/* Phone Exterior Frame */}
-              <div className="w-[310px] sm:w-[330px] bg-[#07090D] border-[6px] border-[#222B3D] rounded-[48px] p-2.5 shadow-[0_20px_60px_rgba(0,0,0,0.9)] relative overflow-hidden ring-1 ring-white/15">
+              <div className="w-full max-w-[310px] sm:max-w-[330px] bg-[#07090D] border-[4px] sm:border-[6px] border-[#222B3D] rounded-[40px] sm:rounded-[48px] p-2 sm:p-2.5 shadow-[0_20px_60px_rgba(0,0,0,0.9)] relative overflow-hidden ring-1 ring-white/15 mx-auto">
                 
                 {/* Phone Speaker & Dynamic Island */}
                 <div className="w-24 h-4 bg-[#141A26] rounded-full mx-auto mb-3 flex items-center justify-center">
@@ -1234,7 +1234,7 @@ export const LandingPage: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"
-        className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 transition-transform active:scale-95 flex items-center justify-center group"
+        className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom,1.25rem))] right-4 sm:right-6 z-50 p-3.5 sm:p-4 rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 transition-transform active:scale-95 flex items-center justify-center group"
       >
         <MessageCircle className="w-6 h-6 fill-current" />
         <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-bold pl-0 group-hover:pl-2 text-black">

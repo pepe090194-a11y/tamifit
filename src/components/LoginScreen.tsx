@@ -23,55 +23,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Strictly lock document, html, body and prevent any scroll, bounce or wheel/touch dragging
+  // Responsive setup: ensure clean mobile scroll
   useEffect(() => {
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-    const originalHtmlTouchAction = document.documentElement.style.touchAction;
-    const originalBodyOverflow = document.body.style.overflow;
-    const originalPosition = document.body.style.position;
-    const originalHeight = document.body.style.height;
-    const originalWidth = document.body.style.width;
-    const originalTouchAction = document.body.style.touchAction;
-
-    document.documentElement.style.overflow = 'hidden';
-    document.documentElement.style.height = '100%';
-    document.documentElement.style.touchAction = 'none';
-
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.height = '100%';
-    document.body.style.width = '100%';
-    document.body.style.top = '0';
-    document.body.style.left = '0';
-    document.body.style.touchAction = 'none';
-
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-
-    return () => {
-      document.documentElement.style.overflow = originalHtmlOverflow;
-      document.documentElement.style.height = '';
-      document.documentElement.style.touchAction = originalHtmlTouchAction;
-
-      document.body.style.overflow = originalBodyOverflow;
-      document.body.style.position = originalPosition;
-      document.body.style.height = originalHeight;
-      document.body.style.width = originalWidth;
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.touchAction = originalTouchAction;
-
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchmove', handleTouchMove);
-    };
+    document.documentElement.classList.add('dark');
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -129,13 +83,13 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
   );
 
   return (
-    <div className="login-container fixed inset-0 w-full h-[100dvh] max-h-[100dvh] bg-[#07090C] text-[#F3F4F6] flex flex-col items-center justify-center p-3 sm:p-6 select-none touch-none overscroll-none overflow-hidden">
+    <div className="login-container min-h-[100dvh] w-full bg-[#07090C] text-[#F3F4F6] flex flex-col items-center justify-center p-4 py-8 overflow-y-auto relative select-none">
       {/* Ambient background glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-[#E2FB3A]/10 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-60 sm:w-80 h-60 sm:h-80 bg-blue-500/5 rounded-full blur-[80px] sm:blur-[100px] pointer-events-none" />
 
       {/* Main Login Card */}
-      <div className="w-full max-w-[360px] sm:max-w-[400px] relative z-10 px-1">
+      <div className="w-full max-w-[360px] sm:max-w-[400px] relative z-10 px-1 my-auto">
         <div className="bg-[#11141C]/95 backdrop-blur-xl border border-[#232938] rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl shadow-black/80 space-y-3.5 sm:space-y-4">
           
           {/* Logo & Header */}

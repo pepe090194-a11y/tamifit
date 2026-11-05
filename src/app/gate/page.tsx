@@ -50,7 +50,7 @@ export default function GatePage() {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] min-h-screen w-full bg-white text-zinc-900 flex flex-col items-center justify-center p-4 font-sans">
+    <div className="fixed inset-0 z-[9999] min-h-[100dvh] w-full bg-white text-zinc-900 flex flex-col items-center justify-center p-4 py-8 overflow-y-auto font-sans">
       <div className="w-full max-w-sm mx-auto">
         
         {/* Cartel simple de mantenimiento */}
@@ -80,7 +80,7 @@ export default function GatePage() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:border-zinc-800 focus:ring-1 focus:ring-zinc-800 transition-colors"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-base sm:text-sm focus:outline-none focus:border-zinc-800 focus:ring-1 focus:ring-zinc-800 transition-colors"
               />
             </div>
 
@@ -93,7 +93,7 @@ export default function GatePage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:border-zinc-800 focus:ring-1 focus:ring-zinc-800 transition-colors"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-base sm:text-sm focus:outline-none focus:border-zinc-800 focus:ring-1 focus:ring-zinc-800 transition-colors"
               />
             </div>
 
