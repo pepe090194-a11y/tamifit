@@ -149,13 +149,13 @@ export default function AdminPage() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        return { success: false, error: data.error || 'Credenciales de entrenador incorrectas.' };
+        return { success: false, error: 'Usuario o contraseña incorrectos.' };
       }
 
       if (data.role !== 'trainer') {
         return {
           success: false,
-          error: 'Acceso denegado: este panel es exclusivo para administradores y entrenadores.'
+          error: 'Usuario o contraseña incorrectos.'
         };
       }
 

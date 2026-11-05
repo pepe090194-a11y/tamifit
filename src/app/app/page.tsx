@@ -151,7 +151,7 @@ export default function StudentAppPage() {
       if (data.role === 'trainer') {
         return {
           success: false,
-          error: 'Estas credenciales son de administrador. Accede desde admin.tamifit.es'
+          error: 'Usuario o contraseña incorrectos.'
         };
       }
 

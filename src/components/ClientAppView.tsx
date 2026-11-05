@@ -296,7 +296,7 @@ export const ClientAppView: React.FC<ClientAppViewProps> = ({
       if (onStudentLogin) {
         const ok = await onStudentLogin(loginEmail.trim(), loginCode.trim());
         if (!ok) {
-          setLoginError('Email o clave de acceso no válidos. Consulta con tu entrenadora.');
+          setLoginError('Usuario o contraseña incorrectos.');
         }
       }
     } finally {
