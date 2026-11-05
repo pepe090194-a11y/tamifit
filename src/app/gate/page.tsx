@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
-import { Lock, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 
 export default function GatePage() {
   const [username, setUsername] = useState('');
@@ -25,7 +23,6 @@ export default function GatePage() {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        // Redirigir o recargar para entrar a la web
         window.location.reload();
       } else {
         setError(data.error || 'Credenciales incorrectas');
@@ -38,56 +35,27 @@ export default function GatePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#06080C] text-[#F3F4F6] flex flex-col items-center justify-center p-4 relative overflow-hidden font-sans selection:bg-[#E2FB3A] selection:text-black">
-      
-      {/* Luces y auras de fondo estilo Tamifit */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-[#E2FB3A]/12 to-transparent rounded-full blur-[140px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#E2FB3A]/5 rounded-full blur-[160px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
-      </div>
-
-      <div className="relative z-10 w-full max-w-md mx-auto">
+    <div className="min-h-screen bg-white text-zinc-900 flex flex-col items-center justify-center p-4 font-sans">
+      <div className="w-full max-w-sm mx-auto">
         
-        {/* Cabecera del candado */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center mb-4 group">
-            <Image
-              src="/tamifit-logo.png"
-              alt="Tamifit"
-              width={160}
-              height={50}
-              className="h-10 w-auto object-contain drop-shadow-[0_0_15px_rgba(226,251,58,0.3)]"
-              priority
-            />
-          </div>
-
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-3">
-            <Lock className="w-3.5 h-3.5 text-[#E2FB3A]" />
-            <span>ACCESO EXCLUSIVO EN CONSTRUCCIÓN</span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
-            Sitio Web Privado
+        {/* Cartel simple de mantenimiento */}
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+            Web en mantenimiento
           </h1>
-          <p className="mt-2 text-xs sm:text-sm text-zinc-400 max-w-xs mx-auto">
-            Introduce las credenciales de administración para acceder a la plataforma.
-          </p>
         </div>
 
-        {/* Tarjeta de Login */}
-        <div className="bg-[#0D1017]/90 border border-white/10 rounded-3xl p-6 sm:p-8 backdrop-blur-2xl shadow-2xl shadow-black/80 relative">
-          
+        {/* Formulario minimalista en blanco */}
+        <div className="bg-white border border-zinc-200 rounded-2xl p-6 sm:p-8 shadow-sm">
           {error && (
-            <div className="mb-6 p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-3 text-red-400 text-xs sm:text-sm animate-fadeIn">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>{error}</span>
+            <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-xs text-center">
+              {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-2">
+              <label className="block text-xs font-medium text-zinc-700 mb-1.5">
                 Usuario
               </label>
               <input
@@ -97,13 +65,12 @@ export default function GatePage() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="ej. pepe"
-                className="w-full px-4 py-3.5 rounded-xl bg-black/50 border border-white/10 text-white placeholder-zinc-600 focus:outline-none focus:border-[#E2FB3A] focus:ring-1 focus:ring-[#E2FB3A] text-sm transition-all"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:border-zinc-800 focus:ring-1 focus:ring-zinc-800 transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-2">
+              <label className="block text-xs font-medium text-zinc-700 mb-1.5">
                 Contraseña
               </label>
               <input
@@ -111,31 +78,19 @@ export default function GatePage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full px-4 py-3.5 rounded-xl bg-black/50 border border-white/10 text-white placeholder-zinc-600 focus:outline-none focus:border-[#E2FB3A] focus:ring-1 focus:ring-[#E2FB3A] text-sm transition-all"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:border-zinc-800 focus:ring-1 focus:ring-zinc-800 transition-colors"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl bg-[#E2FB3A] text-black font-black uppercase text-xs sm:text-sm tracking-wider hover:bg-[#c8e02b] transition-all transform hover:scale-[1.01] active:scale-95 shadow-xl shadow-[#E2FB3A]/20 disabled:opacity-50 disabled:pointer-events-none"
+              className="w-full mt-2 py-2.5 px-4 rounded-lg bg-zinc-900 hover:bg-black text-white text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
             >
-              <span>{loading ? 'Verificando...' : 'Acceder al Sitio'}</span>
-              <ArrowRight className="w-4 h-4 stroke-[3]" />
+              {loading ? 'Entrando...' : 'Entrar'}
             </button>
           </form>
-
-          <div className="mt-6 pt-5 border-t border-white/[0.07] flex items-center justify-center gap-2 text-[11px] text-zinc-500 font-mono">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#E2FB3A]" />
-            <span>SESIÓN SEGURA DE ADMINISTRADOR</span>
-          </div>
         </div>
-
-        {/* Footer simple */}
-        <p className="text-center text-[11px] text-zinc-600 font-mono mt-8">
-          TAMIFIT © 2026 // ACCESO PRIVADO
-        </p>
 
       </div>
     </div>
