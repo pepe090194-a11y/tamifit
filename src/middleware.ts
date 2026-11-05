@@ -27,12 +27,18 @@ export function middleware(request: NextRequest) {
   const hasAdminAccess = request.cookies.get('tamifit_admin_access')?.value === 'alm2026_granted';
 
   if (!hasAdminAccess) {
-    // Si no está autenticado, reescribir a la pantalla de candado /gate
+    // Si no está autenticado, reescribir a la pantalla de candado /gate con encabezados para evitar caché
     if (url.pathname !== '/gate') {
       url.pathname = '/gate';
-      return NextResponse.rewrite(url);
+      const res = NextResponse.rewrite(url);
+      res.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+      res.headers.set('CDN-Cache-Control', 'no-store');
+      res.headers.set('Netlify-CDN-Cache-Control', 'no-store');
+      return res;
     }
-    return NextResponse.next();
+    const res = NextResponse.next();
+    res.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    return res;
   }
 
   // Si ya está autenticado e intenta ir a /gate directamente, enviarlo a la portada
@@ -51,7 +57,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // 5. Routing for Student Mobile App Subdomain (app.tamifit.es)
+  // 5. Routing for Student Mobile App Subdomain (app.tamifit.com / app.tamifit.es)
   if (isAppSubdomain) {
     if (url.pathname === '/') {
       url.pathname = '/app';
@@ -64,7 +70,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 6. Routing for Admin Panel Subdomain (admin.tamifit.es)
+  // 6. Routing for Admin Panel Subdomain (admin.tamifit.com / admin.tamifit.es)
   if (isAdminSubdomain) {
     if (url.pathname === '/') {
       url.pathname = '/admin';
@@ -77,7 +83,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 7. Default domain (tamifit.es or localhost:3000):
+  // 7. Default domain (tamifit.com or localhost:3000):
   return NextResponse.next();
 }
 

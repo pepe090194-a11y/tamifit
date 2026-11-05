@@ -1,12 +1,30 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default function GatePage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Asegurar fondo blanco puro y texto oscuro eliminando el tema oscuro global
+    document.documentElement.classList.remove('dark');
+    document.documentElement.style.backgroundColor = '#ffffff';
+    document.body.style.backgroundColor = '#ffffff';
+    document.body.style.color = '#18181b';
+
+    return () => {
+      document.documentElement.classList.add('dark');
+      document.documentElement.style.backgroundColor = '';
+      document.body.style.backgroundColor = '';
+      document.body.style.color = '';
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +53,7 @@ export default function GatePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-zinc-900 flex flex-col items-center justify-center p-4 font-sans">
+    <div className="fixed inset-0 z-[9999] min-h-screen w-full bg-white text-zinc-900 flex flex-col items-center justify-center p-4 font-sans">
       <div className="w-full max-w-sm mx-auto">
         
         {/* Cartel simple de mantenimiento */}
@@ -45,7 +63,7 @@ export default function GatePage() {
           </h1>
         </div>
 
-        {/* Formulario minimalista en blanco */}
+        {/* Formulario minimalista limpio sobre fondo blanco */}
         <div className="bg-white border border-zinc-200 rounded-2xl p-6 sm:p-8 shadow-sm">
           {error && (
             <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-xs text-center">
